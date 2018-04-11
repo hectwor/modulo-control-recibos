@@ -1,0 +1,59 @@
+.DatosCSS {
+  margin-left: 30%;
+  margin-top: 10px;
+  margin-right: 30%;
+  text-align: center;
+}
+
+.DatosCSS-input-checkbox {
+  width:20px;
+  height:17px;
+}
+
+.tabla{
+  width: 100%;
+}
+
+.tabla-cabecera{
+  color: white;
+  width: 100%;
+  background-color: rgb(16, 81, 158);
+}
+
+.table-scroll{
+  height:400px;
+  overflow:auto;
+  margin-top:10px;
+  margin-bottom: 10px;
+}
+
+.boton{
+  text-align: center;
+}
+
+/*
+.DatosCSS-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.DatosCSS-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.DatosCSS-title {
+  font-size: 1.5em;
+}
+
+.BDatosCSS-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+*/

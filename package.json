@@ -1,0 +1,19 @@
+{
+  "name": "modulo-controlrecibos",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "prop-types": "^15.6.1",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "express": "~4.16.0",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "pg-promise": "^8.2.2"
+  }
+}

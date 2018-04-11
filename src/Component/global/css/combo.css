@@ -1,0 +1,13 @@
+.comboBox{
+	text-align: left;
+	width: 350px;
+	margin-left: 15%;
+}
+#anio{
+	margin-right: 45px;
+
+}
+.selComboAnio{
+	width: 153px;
+	font-size: 14px;
+}
