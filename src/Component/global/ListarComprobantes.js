@@ -97,7 +97,7 @@ class ListarComponentes extends Component {
                             </table>
                         </div>
                     </div>
-                    <button id="Enviar" onClick={this.handleEnviarData} class="btn btn-danger">Enviar</button>
+                    <button id="Enviar" onClick={this.handleEnviarData} class="btn btn-danger">Registrar</button>
                 </div>
             );
         }
