@@ -74,53 +74,47 @@ class Content extends Component{
    handleSearchClick(e) {
         let url = 'https://api-modulocontrol.herokuapp.com/recaudaciones/';
                   url = url.concat('detallada/');
+       if(this.state.nombre_apellido === "" && this.state.concepto === ""&& this.state.recibo === "" &&
+           this.state.dates2 === "" && this.state.dates === "" && this.state.dni === ""){
+           let varN=null;
+           this.setState({
+               lista:varN
+           });
+       }else{
 
-       if(this.state.nombre_apellido===""){
-           this.state.nombre_apellido=null;
-           }
+           let arra = {
+               "nombre": this.state.nombre_apellido,
+               "periodoI": this.state.dates,
+               "id_concepto": this.state.concepto,
+               "periodoF": this.state.dates2,
+               "voucher":this.state.recibo
+           };
+           fetch(url, {
 
-       if(this.state.concepto===""){
-           this.state.concepto=null;
-       }
-       if(this.state.dni===""){
-           this.state.dni=null;
-       }
-       if(this.state.dates===""){
-           this.state.dates=null;
-       }
-       if(this.state.dates2===""){
-           this.state.dates2=null;
-       }
-       if(this.state.recibo===""){
-           this.state.recibo=null;
-       }
-            let arra = {
-                "nombre": this.state.nombre_apellido,
-                "periodoI": this.state.dates,
-                "id_concepto": this.state.concepto,
-                "periodoF": this.state.dates2,
-                "voucher":this.state.recibo
-            };
-       console.log(JSON.stringify(arra, null, 2));
-            fetch(url, {
+               method: 'POST',
+               headers: {
+                   'Accept': 'application/json',
+                   'Content-Type': 'application/json',
+               },
+               body: JSON.stringify(arra, null, 2)
 
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(arra, null, 2)
+           })
+               .then((response) => {
+                   return response.json()
+               })
+               .then(responseJson => {
 
-            })
-                .then((response) => {
-                    return response.json()
-                })
-                .then(responseJson => {
+                   this.setState({
+                       lista: responseJson.data
+                   })
+               });
 
-                    this.setState({
-                        lista: responseJson.data
-                    })
-                });
+
+
+       }
+
+
+
 
     }
 
@@ -158,8 +152,8 @@ class Content extends Component{
                         <div className="input-group-prepend">
                             <span className="input-group-text" id="basic-addon1">Periodo</span>
                         </div>
-                        <input type="date" className="form-control" className="calendario_2" onChange={this.handleChange} aria-label="Username" aria-describedby="basic-addon1"></input>
-                        <input type="date" className="form-control" className="calendario_2" onChange={this.handleChange2} aria-label="Username" aria-describedby="basic-addon1"></input>
+                        <input type="date" className="form-control"  onChange={this.handleChange} aria-label="Username" aria-describedby="basic-addon1"></input>
+                        <input type="date" className="form-control"  onChange={this.handleChange2} aria-label="Username" aria-describedby="basic-addon1"></input>
                     </div>
                     <div className="input-group mb-3">
                         <div className="input-group-prepend">

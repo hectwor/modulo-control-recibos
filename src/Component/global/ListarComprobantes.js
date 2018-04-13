@@ -22,6 +22,14 @@ class ListarComponentes extends Component {
         super();
 
        this.handleEnviarData=this.handleEnviarData.bind(this);
+       this.handleDesplegar=this.handleDesplegar.bind(this);
+    }
+
+    handleDesplegar(e) {
+        console.log(e.target.name);
+        let area = document.getElementById(e.target.name+"textA");
+        console.log("area"+area);
+        area.style.display=( area.style.display==="block")? "none":"block";
     }
 
     handleEnviarData() {
@@ -68,6 +76,8 @@ class ListarComponentes extends Component {
                                 <th>Codigo</th>
                                 <th>Recibo</th>
                                 <th>Verificar</th>
+                                <th>Observaciones</th>
+                                <th></th>
                             </tr>
                             </thead>
                         </table>
@@ -92,9 +102,11 @@ class ListarComponentes extends Component {
                                             }
 
                                         </td>
+                                        <td><button onClick={this.handleDesplegar} name={dynamicData.id_rec}>+</button></td>
+                                        <td><textarea id={dynamicData.id_rec+'textA'} className="observaciones"></textarea></td>
                                     </tr>
-                                )
-                                }</tbody>
+                                )}
+                                </tbody>
                             </table>
                         </div>
                     </div>
