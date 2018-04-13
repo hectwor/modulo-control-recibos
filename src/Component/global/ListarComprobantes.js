@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import './DatosCSS.css';
+import './css/DatosCSS.css';
+import './css/bootstrap.css';
 
 
 function  verificar(){
@@ -52,7 +53,7 @@ class ListarComponentes extends Component {
             );
         }else if (listado.length===0){
             return (
-                <div> Datos no encontrados</div>
+                <div className="alert alert-info"> Datos no encontrados</div>
             );
         } else {
             return (
@@ -97,7 +98,7 @@ class ListarComponentes extends Component {
                             </table>
                         </div>
                     </div>
-                    <button id="Enviar" onClick={this.handleEnviarData} class="btn btn-danger">Enviar</button>
+                    <button id="Enviar" onClick={this.handleEnviarData} className="btn btn-danger">Enviar</button>
                 </div>
             );
         }

@@ -165,7 +165,7 @@ class Content extends Component{
                         <div className="input-group-prepend">
                             <span className="input-group-text" id="basic-addon1">Recibo</span>
                         </div>
-                        <input id="recibo" type="text" className="form-control" value={this.state.recibo} onChange={this.handleInputRecibo} placeholder="############" aria-label="Username" aria-describedby="basic-addon1"></input>
+                        <input id="recibo" type="text" className="form-control" value={this.state.recibo} onChange={this.handleInputRecibo} placeholder="ejem:cod1,cod2,..." aria-label="Username" aria-describedby="basic-addon1"></input>
                     </div>
                     <button id="Buscar" onClick={this.handleSearchClick} className="btn btn-outline-success">Buscar</button>
                 </div>

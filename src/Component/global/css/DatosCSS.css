@@ -26,6 +26,9 @@
   margin-top:10px;
   margin-bottom: 10px;
 }
+.btn btn-danger{
+  text-align: center;
+}
 
 .boton{
   text-align: center;
