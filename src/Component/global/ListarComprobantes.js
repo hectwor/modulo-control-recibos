@@ -2,39 +2,50 @@ import React, { Component } from 'react';
 import './css/DatosCSS.css';
 import './css/bootstrap.css';
 
-
+function Obj(id_rec,obs,flag){
+    this.id_rec=id_rec;
+    this.obs=flag+"-"+obs;
+}
 function  verificar(){
     const checks = document.querySelectorAll(".DatosCSS-input-checkbox");
+    const obs=document.querySelectorAll(".observaciones");
     let tam= checks.length;
-    let cadena="";
+    let arreglo = new Array(0);
+    let result;
     for (let i = 0; i < tam; i++) {
-        if (checks[i].checked) {
-            cadena = cadena.concat(checks[i].id+",");
+        if ( checks[i].checked ) {
+           result = new Obj(checks[i].id,obs[i].value,true);
+        }else{
+            result = new Obj(checks[i].id,obs[i].value,false);
         }
+        arreglo.push(result);
     }
-    cadena = cadena.substring(0,cadena.length-1);
-    return cadena
-}
+    return arreglo;
+   }
 class ListarComponentes extends Component {
-
-
     constructor(){
         super();
-
+        this.anterior="";
        this.handleEnviarData=this.handleEnviarData.bind(this);
        this.handleDesplegar=this.handleDesplegar.bind(this);
     }
 
     handleDesplegar(e) {
-        console.log(e.target.name);
+        if(this.anterior!==""){
+            this.anterior.style.display = "none";
+        }
         let area = document.getElementById(e.target.name+"textA");
-        console.log("area"+area);
+
+        //console.log("area"+area);
+
         area.style.display=( area.style.display==="block")? "none":"block";
+        this.anterior=area;
     }
 
     handleEnviarData() {
+        let arreglo=verificar();
+        console.log(JSON.stringify(arreglo));
         const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/id';
-        let cadena = verificar();
         fetch(url,{
 
             method: 'POST',
@@ -42,15 +53,15 @@ class ListarComponentes extends Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({"id_rec":cadena})
+            body: JSON.stringify(arreglo)
                     })
             .then(res => res.json())
             .then(res => {
                 if (res.status) { // exito
-                    alert('Cargó los datos ');
+                    alert('Datos cargados exitosamente');
                 }
             })
-            .catch(error => error);
+    .catch(error => error);
     }
     render() {
     	const {listado} = this.props;

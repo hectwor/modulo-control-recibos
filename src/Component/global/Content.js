@@ -21,7 +21,7 @@ class Content extends Component{
 
         this.handleChange = this.handleChange.bind(this);
         this.handleChange2 = this.handleChange2.bind(this);
-       this.handleSearchClick=this.handleSearchClick.bind(this);
+        this.handleSearchClick=this.handleSearchClick.bind(this);
         this.handleInputName=this.handleInputName.bind(this);
         this.handleInputConcepto=this.handleInputConcepto.bind(this);
         this.handleInputRecibo=this.handleInputRecibo.bind(this);
