@@ -36,7 +36,7 @@ class ListarComponentes extends Component {
         }
         let area = document.getElementById(e.target.name+"textA");
 
-        //console.log("area"+area);
+        console.log("area"+area);
 
         area.style.display=( area.style.display==="block")? "none":"block";
         this.anterior=area;
@@ -72,7 +72,7 @@ class ListarComponentes extends Component {
             );
         }else if (listado.length===0){
             return (
-                <div className="alert alert-info"> Datos no encontrados</div>
+                <div className="alert alert-info">Datos no encontrados</div>
             );
         } else {
             return (
@@ -122,7 +122,7 @@ class ListarComponentes extends Component {
                         </div>
                     </div>
 
-                    <button id="Enviar" onClick={this.handleEnviarData} className="btn btn-danger">Enviar</button>
+                    <button id="Enviar" onClick={this.handleEnviarData} className="btn btn-danger">Registrar</button>
                 </div>
             );
         }
