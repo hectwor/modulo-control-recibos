@@ -65,10 +65,14 @@ class ListarComponentes extends Component {
     }
     render() {
     	const {listado} = this.props;
-
-    	if(listado===null){
-    	    return (
+        if (listado===null){
+            return (
                 <div></div>
+            );
+        }
+    	else if(listado===""){
+    	    return (
+                <div className="alert alert-info">Casilleros vacíos</div>
             );
         }else if (listado.length===0){
             return (
