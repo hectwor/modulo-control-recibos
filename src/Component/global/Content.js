@@ -16,7 +16,7 @@ class Content extends Component{
             dni:"",
             recibo:"",
             dates:"",
-            dates2:""
+            dates2:"",
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -87,7 +87,8 @@ class Content extends Component{
                "periodoI": this.state.dates,
                "id_concepto": this.state.concepto,
                "periodoF": this.state.dates2,
-               "voucher":this.state.recibo
+               "voucher":this.state.recibo,
+               "dni":this.state.dni
            };
            fetch(url, {
 
