@@ -76,7 +76,7 @@ class Content extends Component{
                   url = url.concat('detallada/');
        if(this.state.nombre_apellido === "" && this.state.concepto === ""&& this.state.recibo === "" &&
            this.state.dates2 === "" && this.state.dates === "" && this.state.dni === ""){
-           let varN=null;
+           let varN="";
            this.setState({
                lista:varN
            });
