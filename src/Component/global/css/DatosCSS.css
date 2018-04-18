@@ -10,12 +10,9 @@
   overflow:auto;
   margin: auto;
 }
-td{
-  width: auto;
-}
+
 .tabla-cabecera{
   color: white;
-  width: 100%;
   background-color: rgb(16, 81, 158);
 }
 

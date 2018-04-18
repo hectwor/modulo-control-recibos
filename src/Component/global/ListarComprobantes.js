@@ -110,7 +110,7 @@ class ListarComponentes extends Component {
                                 </thead>
                                 <tbody>{listado.map((dynamicData,i) =>
                                     <tr key={i} >
-                                        <td>{i}</td>
+                                        <td>{i+1}</td>
                                         <td>{dynamicData.nombre}</td>
                                         <td>{dynamicData.concepto}</td>
                                         <td>{dynamicData.codigo}</td>

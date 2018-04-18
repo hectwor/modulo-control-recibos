@@ -128,9 +128,9 @@ class Content extends Component{
                 <div className="buscar">
                     <div className="input-group mb-3">
                         <div className="input-group-prepend">
-                            <span className="input-group-text" id="basic-addon1">Nombres y Apellidos</span>
+                            <span className="input-group-text" id="basic-addon1">Nombre o Apellido</span>
                         </div>
-                        <input id="busca" type="text" className="form-control" value={this.state.nombre_apellido} onChange={this.handleInputName} placeholder="nombre apellido" aria-label="Username" aria-describedby="basic-addon1"></input>
+                        <input id="busca" type="text" className="form-control" value={this.state.nombre_apellido} onChange={this.handleInputName} placeholder="nombre o apellido" aria-label="Username" aria-describedby="basic-addon1"></input>
                     </div>
                     <div className="input-group mb-3">
                         <div className="input-group-prepend">
