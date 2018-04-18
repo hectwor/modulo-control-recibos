@@ -24,7 +24,7 @@ class MyModal extends Component{
                 <div className="modal-body"  >
                     <div className="form-group">
                         <label htmlFor="message-text" className="col-form-label">Observacion:</label>
-                        <textarea className = "form-control" id = "message-text" defaultValue={text} ref = {this.texto}></textarea>
+                        <textarea className = "form-control" id = "message-text" ref={this.texto} defaultValue={text!=="0"?(text):(null)}></textarea>
                     </div>
                     <div className="modal-footer">
                         <button type = "button" className = "btn btn-secondary" data-dismiss = "modal" onClick = {ModalManager.close}>Cerrar</button>

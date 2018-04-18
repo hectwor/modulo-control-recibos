@@ -4,7 +4,7 @@ import MyModal from './MyModal';
 import './css/DatosCSS.css';
 import './css/bootstrap.css';
 
- var listaObs= new Array(0);
+var listaObs= new Array(0);
 function crearJSON(id_rec,obs,flag){
     this.id_rec=id_rec;
     this.obs=flag+"-"+obs;
@@ -95,34 +95,29 @@ class ListarComponentes extends Component {
             );
         } else {
             return (
-                <div className="boton">
-                    <div className="DatosCSS">
-                        <table className="tabla">
-                            <thead>
-                            <tr className="tabla-cabecera">
-                                <th>Nro</th>
-                                <th>Nombre Apellido</th>
-                                <th>Concepto</th>
-                                <th>Codigo</th>
-                                <th>Recibo</th>
-                                <th>Verificar</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                        </table>
-                        <div className="table-scroll">
+                <div className="table-scroll">
                             <table className="tabla">
+                                <thead>
+                                <tr className="tabla-cabecera">
+                                    <th>Nro</th>
+                                    <th>Nombre Apellido</th>
+                                    <th>Concepto</th>
+                                    <th>Codigo</th>
+                                    <th>Recibo</th>
+                                    <th>Verificar</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
                                 <tbody>{listado.map((dynamicData,i) =>
                                     <tr key={i} >
                                         <td>{i}</td>
                                         <td>{dynamicData.nombre}</td>
                                         <td>{dynamicData.concepto}</td>
                                         <td>{dynamicData.codigo}</td>
-                                        <td>{dynamicData.numero_voucher}</td>
+                                        <td>{dynamicData.numero}</td>
 
                                         <td>
                                             {
-
                                                 dynamicData.validado ? (
                                                     <input id={dynamicData.id_rec} type="checkbox" className="DatosCSS-input-checkbox"  defaultChecked disabled />
                                                 ):(
@@ -139,11 +134,8 @@ class ListarComponentes extends Component {
                                 )}
                                 </tbody>
                             </table>
-                        </div>
+                            <button id="Enviar" onClick={this.handleEnviarData} className="btn btn-danger">Registrar</button>
                     </div>
-
-                    <button id="Enviar" onClick={this.handleEnviarData} className="btn btn-danger">Registrar</button>
-                </div>
             );
         }
 
