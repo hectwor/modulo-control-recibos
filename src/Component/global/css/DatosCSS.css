@@ -13,10 +13,8 @@
 .tabla{
   width: 100%;
 }
-.observaciones{
-  display:none;
-  width: 200px;
-  height: 50px;
+td{
+  width: 25%;
 }
 .tabla-cabecera{
   color: white;

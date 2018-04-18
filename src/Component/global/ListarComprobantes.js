@@ -1,46 +1,61 @@
 import React, { Component } from 'react';
+import {ModalManager} from 'react-dynamic-modal';
+import MyModal from './MyModal';
 import './css/DatosCSS.css';
 import './css/bootstrap.css';
 
-function Obj(id_rec,obs,flag){
+ var listaObs= new Array(0);
+function crearJSON(id_rec,obs,flag){
     this.id_rec=id_rec;
     this.obs=flag+"-"+obs;
 }
+function Obj(id_rec,obs){
+    this.id_rec=id_rec;
+    this.obs=obs;
+}
 function  verificar(){
     const checks = document.querySelectorAll(".DatosCSS-input-checkbox");
-    const obs=document.querySelectorAll(".observaciones");
     let tam= checks.length;
     let arreglo = new Array(0);
     let result;
     for (let i = 0; i < tam; i++) {
         if ( checks[i].checked ) {
-           result = new Obj(checks[i].id,obs[i].value,true);
+           result = new  crearJSON(checks[i].id,listaObs[i].obs,true);
         }else{
-            result = new Obj(checks[i].id,obs[i].value,false);
+            result = new  crearJSON(checks[i].id,listaObs[i].obs,false);
         }
         arreglo.push(result);
     }
     return arreglo;
    }
+
 class ListarComponentes extends Component {
     constructor(){
         super();
-        this.anterior="";
        this.handleEnviarData=this.handleEnviarData.bind(this);
-       this.handleDesplegar=this.handleDesplegar.bind(this);
+       this.openModal=this.openModal.bind(this);
+       this.handleChange=this.handleChange.bind(this);
+       this.state={
+           texto:""
+       }
     }
 
-    handleDesplegar(e) {
-        if(this.anterior!==""){
-            this.anterior.style.display = "none";
+    handleChange(text,id_rec){
+        let tam=listaObs.length;
+        for (let i=0;i<tam;i++){
+            if(listaObs[i].id_rec===id_rec){
+                listaObs[i].obs=text;
+            }
         }
-        let area = document.getElementById(e.target.name+"textA");
-
-        console.log("area"+area);
-
-        area.style.display=( area.style.display==="block")? "none":"block";
-        this.anterior=area;
+        console.log(listaObs);
     }
+    openModal(e){
+        //https://github.com/xue2han/react-dynamic-modal
+         let text=e.target.id;
+         let id_re=e.target.name;
+        ModalManager.open(<MyModal text={text} id_rec={id_re} change={this.handleChange}/>);
+    }
+
 
     handleEnviarData() {
         let arreglo=verificar();
@@ -70,7 +85,11 @@ class ListarComponentes extends Component {
     	    return (
                 <div></div>
             );
-        }else if (listado.length===0){
+        }else if(listado===""){
+            return (
+                <div className="alert alert-info">Casilleros vacíos</div>
+            ); }
+            if (listado.length===0){
             return (
                 <div className="alert alert-info">Datos no encontrados</div>
             );
@@ -87,7 +106,6 @@ class ListarComponentes extends Component {
                                 <th>Codigo</th>
                                 <th>Recibo</th>
                                 <th>Verificar</th>
-                                <th>Observaciones</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -105,16 +123,18 @@ class ListarComponentes extends Component {
                                         <td>
                                             {
 
-                                                dynamicData.flag_pago ? (
-                                                    <input id={dynamicData.id_rec} type="checkbox" className="DatosCSS-input-checkbox" defaultChecked disabled />
+                                                dynamicData.validado ? (
+                                                    <input id={dynamicData.id_rec} type="checkbox" className="DatosCSS-input-checkbox"  defaultChecked disabled />
                                                 ):(
-                                                    <input id={dynamicData.id_rec} type="checkbox" className="DatosCSS-input-checkbox"/>
+                                                    <input id={dynamicData.id_rec} type="checkbox" className="DatosCSS-input-checkbox"  />
                                                 )
                                             }
 
                                         </td>
-                                        <td><button onClick={this.handleDesplegar} name={dynamicData.id_rec}>+</button></td>
-                                        <td><textarea id={dynamicData.id_rec+'textA'} className="observaciones"></textarea></td>
+                                        <td id={listaObs.push(new Obj(dynamicData.id_rec,dynamicData.observacion))}>
+
+                                            <button type="button" onClick={this.openModal} id={dynamicData.observacion} name={dynamicData.id_rec} className="btn btn-primary">Observaciones</button>
+                                        </td>
                                     </tr>
                                 )}
                                 </tbody>
