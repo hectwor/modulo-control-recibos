@@ -1,18 +1,27 @@
 import React, { Component } from 'react';
 import {ModalManager} from 'react-dynamic-modal';
 import MyModal from './MyModal';
+import Combo from './Combo';
 import './css/DatosCSS.css';
 import './css/bootstrap.css';
+import Datos from './Datos/Items';
 
+// lista de datos que se recibe en el JSON
 var listaObs= new Array(0);
+
+// crear un objeto para enviar al server
 function crearJSON(id_rec,obs,flag){
     this.id_rec=id_rec;
     this.obs=flag+"-"+obs;
 }
+
+//crea un objeto para pasar al hijo
 function Obj(id_rec,obs){
     this.id_rec=id_rec;
     this.obs=obs;
 }
+
+// funcion verifica los checks y las observaciones nuevas
 function  verificar(){
     const checks = document.querySelectorAll(".DatosCSS-input-checkbox");
     let tam= checks.length;
@@ -30,16 +39,18 @@ function  verificar(){
    }
 
 class ListarComponentes extends Component {
-    constructor(){
-        super();
+    constructor(...props){
+        super(...props);
        this.handleEnviarData=this.handleEnviarData.bind(this);
        this.openModal=this.openModal.bind(this);
        this.handleChange=this.handleChange.bind(this);
        this.state={
-           texto:""
+           data:[]
        }
     }
 
+    // recibe la observacion y el id de recaudaciones modificados
+    // los almacena o actualiza en el array
     handleChange(text,id_rec){
         let tam=listaObs.length;
         for (let i=0;i<tam;i++){
@@ -49,6 +60,7 @@ class ListarComponentes extends Component {
         }
         console.log(listaObs);
     }
+    // abre el componente MyModal para ingresar observaciones
     openModal(e){
         //https://github.com/xue2han/react-dynamic-modal
          let text=e.target.id;
@@ -56,7 +68,7 @@ class ListarComponentes extends Component {
         ModalManager.open(<MyModal text={text} id_rec={id_re} change={this.handleChange}/>);
     }
 
-
+// envia un JSON al server
     handleEnviarData() {
         let arreglo=verificar();
         console.log(JSON.stringify(arreglo));
@@ -76,7 +88,7 @@ class ListarComponentes extends Component {
                     alert('Datos cargados exitosamente');
                 }
             })
-    .catch(error => error);
+        //https://github.com/calambrenet/react-table/blob/master/src/react-table.jsx
     }
     render() {
     	const {listado} = this.props;
@@ -104,6 +116,7 @@ class ListarComponentes extends Component {
                                     <th>Concepto</th>
                                     <th>Codigo</th>
                                     <th>Recibo</th>
+                                    <th>Ubicación</th>
                                     <th>Verificar</th>
                                     <th></th>
                                 </tr>
@@ -115,6 +128,7 @@ class ListarComponentes extends Component {
                                         <td>{dynamicData.concepto}</td>
                                         <td>{dynamicData.codigo}</td>
                                         <td>{dynamicData.numero}</td>
+                                        <td> <Combo items={Datos} val={2}/> </td>
 
                                         <td>
                                             {

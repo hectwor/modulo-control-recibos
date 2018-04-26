@@ -3,7 +3,9 @@
   width:20px;
   height:17px;
 }
-
+td{
+  height: auto;
+}
 .tabla{
   width: auto;
   height:auto;

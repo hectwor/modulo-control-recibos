@@ -108,7 +108,7 @@ class Content extends Component{
 
                    this.setState({
                        lista: responseJson.data
-                   })
+                   });
                    console.log( responseJson.data);
                });
 
@@ -170,6 +170,7 @@ class Content extends Component{
                     <Listardatos listado={this.state.lista} />
                 </div>
             </div>
+
         );
 
     }
