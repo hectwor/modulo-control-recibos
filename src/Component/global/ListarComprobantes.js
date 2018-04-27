@@ -10,15 +10,17 @@ import Datos from './Datos/Items';
 var listaObs= new Array(0);
 
 // crear un objeto para enviar al server
-function crearJSON(id_rec,obs,flag){
+function crearJSON(id_rec,obs,flag,ubic=0){
     this.id_rec=id_rec;
     this.obs=flag+"-"+obs;
+    this.ubic=ubic;
 }
 
 //crea un objeto para pasar al hijo
-function Obj(id_rec,obs){
+function Obj(id_rec,obs,ubic){
     this.id_rec=id_rec;
     this.obs=obs;
+    this.ubic=ubic;
 }
 
 // funcion verifica los checks y las observaciones nuevas
@@ -29,9 +31,11 @@ function  verificar(){
     let result;
     for (let i = 0; i < tam; i++) {
         if ( checks[i].checked ) {
-           result = new  crearJSON(checks[i].id,listaObs[i].obs,true);
+
+           result = new  crearJSON(checks[i].id,listaObs[i].obs,true,listaObs[i].ubic);
+
         }else{
-            result = new  crearJSON(checks[i].id,listaObs[i].obs,false);
+            result = new  crearJSON(checks[i].id,listaObs[i].obs,false,listaObs[i].ubic);
         }
         arreglo.push(result);
     }
@@ -44,10 +48,22 @@ class ListarComponentes extends Component {
        this.handleEnviarData=this.handleEnviarData.bind(this);
        this.openModal=this.openModal.bind(this);
        this.handleChange=this.handleChange.bind(this);
+       this.handleChangeUbic=this.handleChangeUbic.bind(this);
        this.state={
            data:[]
        }
     }
+//recibe las ubicaciones de los archivos
+    handleChangeUbic(text,id_rec){
+      let tam=listaObs.length;
+      for (let i=0;i<tam;i++){
+          if(listaObs[i].id_rec===id_rec){
+              listaObs[i].ubic=text;
+          }
+      }
+      console.log(listaObs);
+    }
+
 
     // recibe la observacion y el id de recaudaciones modificados
     // los almacena o actualiza en el array
@@ -128,7 +144,7 @@ class ListarComponentes extends Component {
                                         <td>{dynamicData.concepto}</td>
                                         <td>{dynamicData.codigo}</td>
                                         <td>{dynamicData.numero}</td>
-                                        <td> <Combo items={Datos} val={2}/> </td>
+                                        <td> <Combo items={Datos} val={this.handleChangeUbic} ubic={dynamicData.id_ubicacion} id_rec={dynamicData.id_rec}/> </td>
 
                                         <td>
                                             {
@@ -140,7 +156,7 @@ class ListarComponentes extends Component {
                                             }
 
                                         </td>
-                                        <td id={listaObs.push(new Obj(dynamicData.id_rec,dynamicData.observacion))}>
+                                        <td id={listaObs.push(new Obj(dynamicData.id_rec,dynamicData.observacion,dynamicData.ubic))}>
 
                                             <button type="button" onClick={this.openModal} id={dynamicData.observacion} name={dynamicData.id_rec} className="btn btn-primary">Observaciones</button>
                                         </td>
