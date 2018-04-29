@@ -2,92 +2,108 @@ import React, { Component } from 'react';
 import {ModalManager} from 'react-dynamic-modal';
 import MyModal from './MyModal';
 import Combo from './Combo';
+import Check from './Check';
 import './css/DatosCSS.css';
 import './css/bootstrap.css';
 import Datos from './Datos/Items';
 
-// lista de datos que se recibe en el JSON
-var listaObs= new Array(0);
-
-// crear un objeto para enviar al server
-function crearJSON(id_rec,obs,flag,ubic=0){
-    this.id_rec=id_rec;
-    this.obs=flag+"-"+obs;
-    this.ubic=ubic;
-}
-
-//crea un objeto para pasar al hijo
-function Obj(id_rec,obs,ubic){
-    this.id_rec=id_rec;
-    this.obs=obs;
-    this.ubic=ubic;
-}
-
-// funcion verifica los checks y las observaciones nuevas
-function  verificar(){
-    const checks = document.querySelectorAll(".DatosCSS-input-checkbox");
-    let tam= checks.length;
-    let arreglo = new Array(0);
-    let result;
-    for (let i = 0; i < tam; i++) {
-        if ( checks[i].checked ) {
-
-           result = new  crearJSON(checks[i].id,listaObs[i].obs,true,listaObs[i].ubic);
-
-        }else{
-            result = new  crearJSON(checks[i].id,listaObs[i].obs,false,listaObs[i].ubic);
-        }
-        arreglo.push(result);
-    }
-    return arreglo;
-   }
 
 class ListarComponentes extends Component {
     constructor(...props){
         super(...props);
        this.handleEnviarData=this.handleEnviarData.bind(this);
        this.openModal=this.openModal.bind(this);
-       this.handleChange=this.handleChange.bind(this);
+       this.handleChangeObs=this.handleChangeObs.bind(this);
        this.handleChangeUbic=this.handleChangeUbic.bind(this);
+       this.Obj=this.Obj.bind(this);
+       this.handleChangeEstado=this.handleChangeEstado.bind(this);
+       this.crearJSON=this.crearJSON.bind(this);
+       this.verificar=this.verificar.bind(this);
        this.state={
            data:[]
        }
     }
-//recibe las ubicaciones de los archivos
-    handleChangeUbic(text,id_rec){
-      let tam=listaObs.length;
-      for (let i=0;i<tam;i++){
-          if(listaObs[i].id_rec===id_rec){
-              listaObs[i].ubic=text;
-          }
-      }
-      console.log(listaObs);
+    componentWillReceiveProps(nextProps) {
+        let arreglo = [];
+        const lista = nextProps.listado;
+       // console.log("el component"+lista);
+        if (lista !== null && lista!=="") {
+            lista.map((item,key) => {
+                arreglo=arreglo.concat(new this.Obj(item.id_rec, item.observacion, item.id_ubicacion,item.validado));
+            });
+           // console.log(arreglo);
+            this.setState({
+                data: arreglo
+            }/*, function () {
+                console.log("call"+this.state.data)
+            }*/)
+        }
     }
 
+    // crear un objeto para enviar al server
+    crearJSON(id_rec,obs,flag,ubic=0){
+        this.id_rec=id_rec;
+        this.obs=flag+"-"+obs;
+        this.ubic=ubic;
+    }
+
+// funcion verifica los checks y las observaciones nuevas
+    verificar(){
+        const arreglo=this.state.data;
+        let arreglo2=[];
+        arreglo.map(item=>{
+            arreglo2=arreglo2.concat(new this.crearJSON(item.id_rec,item.obs,item.validado,item.ubic))
+        });
+        console.log(arreglo2);
+        return arreglo2;
+    }
+
+//crea un objeto para pasar al hijo
+    Obj(id_rec,obs,ubic,validado){
+        this.id_rec=id_rec;
+        this.obs=obs;
+        this.ubic=ubic;
+        this.validado=validado;
+    }
+//recibe las ubicaciones de los archivos
+    handleChangeUbic(ubic,id_rec){
+        this.state.data.map(items=>{
+            if(items.id_rec===id_rec){
+                items.ubic=ubic;
+            }
+        });
+    }
+//recibe el estado de los checks cada vez que se pulsa sobre ellos
+    handleChangeEstado(estado,id){
+        const validado=estado.target.checked;
+        this.state.data.map(items=>{
+           if(items.id_rec===id){
+                items.validado=validado;
+           }
+        });
+    }
 
     // recibe la observacion y el id de recaudaciones modificados
     // los almacena o actualiza en el array
-    handleChange(text,id_rec){
-        let tam=listaObs.length;
-        for (let i=0;i<tam;i++){
-            if(listaObs[i].id_rec===id_rec){
-                listaObs[i].obs=text;
+    handleChangeObs(text, id_rec){
+        this.state.data.map(items=>{
+            if(items.id_rec===id_rec){
+                items.obs=text;
             }
-        }
-        console.log(listaObs);
+        });
+     //   console.log(this.state.data);
     }
     // abre el componente MyModal para ingresar observaciones
     openModal(e){
         //https://github.com/xue2han/react-dynamic-modal
          let text=e.target.id;
          let id_re=e.target.name;
-        ModalManager.open(<MyModal text={text} id_rec={id_re} change={this.handleChange}/>);
+        ModalManager.open(<MyModal text={text} id_rec={id_re} change={this.handleChangeObs}/>);
     }
-
 // envia un JSON al server
     handleEnviarData() {
-        let arreglo=verificar();
-        console.log(JSON.stringify(arreglo));
+        const arreglo=this.verificar();
+        console.log(arreglo);
         const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/id';
         fetch(url,{
 
@@ -107,8 +123,10 @@ class ListarComponentes extends Component {
         //https://github.com/calambrenet/react-table/blob/master/src/react-table.jsx
     }
     render() {
-    	const {listado} = this.props;
-        if (listado===null){
+        //const {listado} = this.state.data;
+        const {listado} = this.props;
+    	//console.log(listado);
+        if (listado==null){
             return (
                 <div></div>
             );
@@ -147,17 +165,17 @@ class ListarComponentes extends Component {
                                         <td> <Combo items={Datos} val={this.handleChangeUbic} ubic={dynamicData.id_ubicacion} id_rec={dynamicData.id_rec}/> </td>
 
                                         <td>
-                                            {
+                                           {/*
                                                 dynamicData.validado ? (
                                                     <input id={dynamicData.id_rec} type="checkbox" className="DatosCSS-input-checkbox"  defaultChecked disabled />
                                                 ):(
                                                     <input id={dynamicData.id_rec} type="checkbox" className="DatosCSS-input-checkbox"  />
                                                 )
+                                                */
                                             }
-
+                                           <Check validado={dynamicData.validado} id={dynamicData.id_rec} change={this.handleChangeEstado}/>
                                         </td>
-                                        <td id={listaObs.push(new Obj(dynamicData.id_rec,dynamicData.observacion,dynamicData.ubic))}>
-
+                                        <td>
                                             <button type="button" onClick={this.openModal} id={dynamicData.observacion} name={dynamicData.id_rec} className="btn btn-primary">Observaciones</button>
                                         </td>
                                     </tr>

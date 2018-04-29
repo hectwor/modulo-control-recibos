@@ -21,8 +21,9 @@ class Combo extends Component{
           break;
           case "Seleccione ubicación":num="";
           break;
+            default:
+                num = "";
         }
-          console.log(num+"kakakk"+this.props.ubic);
         this.props.val(num,this.props.id_rec);
     }
 

@@ -16,7 +16,7 @@ class Content extends Component{
             dni:"",
             recibo:"",
             dates:"",
-            dates2:"",
+            dates2:""
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -26,6 +26,7 @@ class Content extends Component{
         this.handleInputConcepto=this.handleInputConcepto.bind(this);
         this.handleInputRecibo=this.handleInputRecibo.bind(this);
         this.handleInputDni=this.handleInputDni.bind(this);
+        this.handleSearchKey=this.handleSearchKey.bind((this));
     }
     // leer del input Concepto
     handleInputConcepto(data){
@@ -69,9 +70,14 @@ class Content extends Component{
             });
         }
     }
-
+    handleSearchKey(e){
+        if(e.key==="enter"){
+            this.handleSearchClick();
+        }
+    }
     //buscar
    handleSearchClick(e) {
+
         let url = 'https://api-modulocontrol.herokuapp.com/recaudaciones/';
                   url = url.concat('detallada/');
        if(this.state.nombre_apellido === "" && this.state.concepto === ""&& this.state.recibo === "" &&
@@ -81,7 +87,6 @@ class Content extends Component{
                lista:varN
            });
        }else{
-
            let arra = {
                "nombre": this.state.nombre_apellido,
                "periodoI": this.state.dates,
@@ -100,27 +105,19 @@ class Content extends Component{
                body: JSON.stringify(arra, null, 2)
 
            })
-
                .then((response) => {
                    return response.json()
                })
                .then(responseJson => {
-
                    this.setState({
                        lista: responseJson.data
                    });
                    console.log( responseJson.data);
                });
 
-
-
        }
 
-
-
-
     }
-
 
     render(){
         return(
@@ -144,13 +141,6 @@ class Content extends Component{
                         </div>
                         <input id="dni" type="text" className="form-control" value={this.state.dni} onChange={this.handleInputDni} placeholder="codigo" aria-label="Username" aria-describedby="basic-addon1"></input>
                     </div>
-                    {/*<div className="calendar">
-			      <label className="periodo" id="periodo">Periodo</label>
-			      <input type="date" className="calendario_1" onChange={this.handleChange}/>
-			      <input type="date" className="calendario_2" onChange={this.handleChange2}/>
-						<br />
-					</div>
-				*/}
                     <div className="input-group mb-3">
                         <div className="input-group-prepend">
                             <span className="input-group-text" id="basic-addon1">Periodo</span>
@@ -164,11 +154,13 @@ class Content extends Component{
                         </div>
                         <input id="recibo" type="text" className="form-control" value={this.state.recibo} onChange={this.handleInputRecibo} placeholder="ejem:cod1,cod2,..." aria-label="Username" aria-describedby="basic-addon1"></input>
                     </div>
-                    <button id="Buscar" onClick={this.handleSearchClick} className="btn btn-outline-success">Buscar</button>
+                    <button id="Buscar" onClick={this.handleSearchClick} onKeyPress={this.handleSearchKey}className="btn btn-outline-success">Buscar</button>
                 </div>
-                <div className="listar">
-                    <Listardatos listado={this.state.lista} />
-                </div>
+                {
+                   // this.state.lista?(<div className="listar"><Listardatos listado={this.state.lista} /></div>):(<div className="listar"></div>)
+                }
+                <div className="listar"><Listardatos listado={this.state.lista} /></div>
+
             </div>
 
         );

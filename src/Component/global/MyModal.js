@@ -11,7 +11,7 @@ class MyModal extends Component{
     }
     handlerGuardar(){
         let data=this.texto.current.value;
-        console.log(data);
+       // console.log(data);
         this.props.change(data,this.props.id_rec);
         ModalManager.close();
     }
