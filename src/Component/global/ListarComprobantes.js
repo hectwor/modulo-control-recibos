@@ -20,16 +20,17 @@ class ListarComponentes extends Component {
        this.crearJSON=this.crearJSON.bind(this);
        this.verificar=this.verificar.bind(this);
        this.state={
-           data:[]
+           data:null
        }
     }
     componentWillReceiveProps(nextProps) {
         let arreglo = [];
         const lista = nextProps.listado;
-       // console.log("el component"+lista);
-        if (lista !== null && lista!=="") {
+      // console.log(nextProps.listado);
+        if (lista !== null) {
             lista.map((item,key) => {
-                arreglo=arreglo.concat(new this.Obj(item.id_rec, item.observacion, item.id_ubicacion,item.validado));
+                arreglo=arreglo.concat(new this.Obj(item.id_rec, item.observacion, item.id_ubicacion,item.validado,item.nombre,
+                    item.concepto,item.codigo,item.numero));
             });
            // console.log(arreglo);
             this.setState({
@@ -59,11 +60,15 @@ class ListarComponentes extends Component {
     }
 
 //crea un objeto para pasar al hijo
-    Obj(id_rec,obs,ubic,validado){
+    Obj(id_rec,obs,ubic,validado,nombre,concepto,codigo,numero){
         this.id_rec=id_rec;
         this.obs=obs;
         this.ubic=ubic;
         this.validado=validado;
+        this.nombre=nombre;
+        this.concepto=concepto;
+        this.codigo=codigo;
+        this.numero=numero;
     }
 //recibe las ubicaciones de los archivos
     handleChangeUbic(ubic,id_rec){
@@ -86,12 +91,17 @@ class ListarComponentes extends Component {
     // recibe la observacion y el id de recaudaciones modificados
     // los almacena o actualiza en el array
     handleChangeObs(text, id_rec){
-        this.state.data.map(items=>{
-            if(items.id_rec===id_rec){
-                items.obs=text;
+        this.setState(prevState=>(
+            prevState.data.map(items => {
+            if (items.id_rec === id_rec) {
+                items.obs = text;
             }
-        });
-     //   console.log(this.state.data);
+        },
+           {data:prevState.data
+        })
+     ));
+
+       // console.log(this.state.data);
     }
     // abre el componente MyModal para ingresar observaciones
     openModal(e){
@@ -123,18 +133,17 @@ class ListarComponentes extends Component {
         //https://github.com/calambrenet/react-table/blob/master/src/react-table.jsx
     }
     render() {
-        //const {listado} = this.state.data;
-        const {listado} = this.props;
-    	//console.log(listado);
-        if (listado==null){
+        const listado = this.state.data;
+       // console.log(listado);
+        if (listado == null) {
             return (
                 <div></div>
             );
-        }else if(listado===""){
+        } else if (listado === "") {
             return (
                 <div className="alert alert-info">Casilleros vacíos</div>
             );
-        }else if (listado.length===0){
+        } else if (listado.length === 0) {
 
             return (
                 <div className="alert alert-info">Datos no encontrados</div>
@@ -142,51 +151,46 @@ class ListarComponentes extends Component {
         } else {
             return (
                 <div className="table-scroll">
-                            <table className="tabla">
-                                <thead>
-                                <tr className="tabla-cabecera">
-                                    <th>Nro</th>
-                                    <th>Nombre Apellido</th>
-                                    <th>Concepto</th>
-                                    <th>Codigo</th>
-                                    <th>Recibo</th>
-                                    <th>Ubicación</th>
-                                    <th>Verificar</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>{listado.map((dynamicData,i) =>
-                                    <tr key={i} >
-                                        <td>{i+1}</td>
-                                        <td>{dynamicData.nombre}</td>
-                                        <td>{dynamicData.concepto}</td>
-                                        <td>{dynamicData.codigo}</td>
-                                        <td>{dynamicData.numero}</td>
-                                        <td> <Combo items={Datos} val={this.handleChangeUbic} ubic={dynamicData.id_ubicacion} id_rec={dynamicData.id_rec}/> </td>
+                    <table className="tabla">
+                        <thead>
+                        <tr className="tabla-cabecera">
+                            <th>Nro</th>
+                            <th>Nombre Apellido</th>
+                            <th>Concepto</th>
+                            <th>Codigo</th>
+                            <th>Recibo</th>
+                            <th>Ubicación</th>
+                            <th>Verificar</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>{listado.map((dynamicData, i) =>
+                            <tr key={i}>
+                                <td>{i + 1}</td>
+                                <td>{dynamicData.nombre}</td>
+                                <td>{dynamicData.concepto}</td>
+                                <td>{dynamicData.codigo}</td>
+                                <td>{dynamicData.numero}</td>
+                                <td><Combo items={Datos} val={this.handleChangeUbic} ubic={dynamicData.ubic}
+                                           id_rec={dynamicData.id_rec}/></td>
 
-                                        <td>
-                                           {/*
-                                                dynamicData.validado ? (
-                                                    <input id={dynamicData.id_rec} type="checkbox" className="DatosCSS-input-checkbox"  defaultChecked disabled />
-                                                ):(
-                                                    <input id={dynamicData.id_rec} type="checkbox" className="DatosCSS-input-checkbox"  />
-                                                )
-                                                */
-                                            }
-                                           <Check validado={dynamicData.validado} id={dynamicData.id_rec} change={this.handleChangeEstado}/>
-                                        </td>
-                                        <td>
-                                            <button type="button" onClick={this.openModal} id={dynamicData.observacion} name={dynamicData.id_rec} className="btn btn-primary">Observaciones</button>
-                                        </td>
-                                    </tr>
-                                )}
-                                </tbody>
-                            </table>
-                            <button id="Enviar" onClick={this.handleEnviarData} className="btn btn-danger">Registrar</button>
-                    </div>
+                                <td>
+                                    <Check validado={dynamicData.validado} id={dynamicData.id_rec}
+                                           change={this.handleChangeEstado}/>
+                                </td>
+                                <td>
+                                    <button type="button" onClick={this.openModal} id={dynamicData.obs}
+                                            name={dynamicData.id_rec} className="btn btn-primary">Observaciones
+                                    </button>
+                                </td>
+                            </tr>
+                        )}
+                        </tbody>
+                    </table>
+                    <button id="Enviar" onClick={this.handleEnviarData} className="btn btn-danger">Registrar</button>
+                </div>
             );
         }
-
     }
 }
 

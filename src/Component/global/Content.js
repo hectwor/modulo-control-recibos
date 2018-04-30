@@ -16,7 +16,10 @@ class Content extends Component{
             dni:"",
             recibo:"",
             dates:"",
-            dates2:""
+            dates2:"",
+            mensaje:"",
+            estado: false,
+            operacion:''
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -59,7 +62,7 @@ class Content extends Component{
         this.setState({
             dates2: date.target.value
         });
-        console.log(this.state.dates2);
+      //  console.log(this.state.dates2);
     }
 
     // ingresar texto
@@ -82,9 +85,11 @@ class Content extends Component{
                   url = url.concat('detallada/');
        if(this.state.nombre_apellido === "" && this.state.concepto === ""&& this.state.recibo === "" &&
            this.state.dates2 === "" && this.state.dates === "" && this.state.dni === ""){
-           let varN="";
            this.setState({
-               lista:varN
+               mensaje:"Casilleros vacios",
+               estado:true,
+               operacion:'V',
+               lista:[]
            });
        }else{
            let arra = {
@@ -110,9 +115,11 @@ class Content extends Component{
                })
                .then(responseJson => {
                    this.setState({
-                       lista: responseJson.data
+                       lista: responseJson.data,
+                       estado:true,
+                       operacion:responseJson.status
                    });
-                   console.log( responseJson.data);
+                   //console.log( responseJson);
                });
 
        }
@@ -155,11 +162,12 @@ class Content extends Component{
                         <input id="recibo" type="text" className="form-control" value={this.state.recibo} onChange={this.handleInputRecibo} placeholder="ejem:cod1,cod2,..." aria-label="Username" aria-describedby="basic-addon1"></input>
                     </div>
                     <button id="Buscar" onClick={this.handleSearchClick} onKeyPress={this.handleSearchKey}className="btn btn-outline-success">Buscar</button>
+
                 </div>
-                {
-                   // this.state.lista?(<div className="listar"><Listardatos listado={this.state.lista} /></div>):(<div className="listar"></div>)
-                }
-                <div className="listar"><Listardatos listado={this.state.lista} /></div>
+
+                <div className="listar">
+                    <div className="listar"><Listardatos listado={this.state.lista} /></div>
+                </div>
 
             </div>
 
