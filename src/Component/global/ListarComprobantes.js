@@ -20,7 +20,8 @@ class ListarComponentes extends Component {
        this.crearJSON=this.crearJSON.bind(this);
        this.verificar=this.verificar.bind(this);
        this.state={
-           data:null
+           data:null,
+           JSON:[]
        }
     }
     componentWillReceiveProps(nextProps) {
@@ -55,7 +56,10 @@ class ListarComponentes extends Component {
         arreglo.map(item=>{
             arreglo2=arreglo2.concat(new this.crearJSON(item.id_rec,item.obs,item.validado,item.ubic))
         });
-        console.log(arreglo2);
+        this.setState({
+           JSON:arreglo2
+        });
+       // console.log(arreglo2);
         return arreglo2;
     }
 
@@ -83,9 +87,10 @@ class ListarComponentes extends Component {
         const validado=estado.target.checked;
         this.state.data.map(items=>{
            if(items.id_rec===id){
-                items.validado=validado;
+                items.validado = validado;
            }
         });
+      //  console.log(this.state.data);
     }
 
     // recibe la observacion y el id de recaudaciones modificados
@@ -112,8 +117,9 @@ class ListarComponentes extends Component {
     }
 // envia un JSON al server
     handleEnviarData() {
+        //console.log(this.state.JSON);
         const arreglo=this.verificar();
-        console.log(arreglo);
+       // console.log(arreglo);
         const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/id';
         fetch(url,{
 
