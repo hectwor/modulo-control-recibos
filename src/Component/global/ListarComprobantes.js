@@ -27,11 +27,11 @@ class ListarComponentes extends Component {
     componentWillReceiveProps(nextProps) {
         let arreglo = [];
         const lista = nextProps.listado;
-      // console.log(nextProps.listado);
+       console.log(nextProps.listado);
         if (lista !== null) {
             lista.map((item,key) => {
                 arreglo=arreglo.concat(new this.Obj(item.id_rec, item.observacion, item.id_ubicacion,item.validado,item.nombre,
-                    item.concepto,item.codigo,item.numero));
+                    item.concepto,item.codigo,item.numero,item.importe,item.fecha));
             });
            // console.log(arreglo);
             this.setState({
@@ -64,7 +64,7 @@ class ListarComponentes extends Component {
     }
 
 //crea un objeto para pasar al hijo
-    Obj(id_rec,obs,ubic,validado,nombre,concepto,codigo,numero){
+    Obj(id_rec,obs,ubic,validado,nombre,concepto,codigo,numero,importe,fecha){
         this.id_rec=id_rec;
         this.obs=obs;
         this.ubic=ubic;
@@ -73,6 +73,8 @@ class ListarComponentes extends Component {
         this.concepto=concepto;
         this.codigo=codigo;
         this.numero=numero;
+        this.importe=importe;
+        this.fecha= fecha && fecha.substr(0,10);
     }
 //recibe las ubicaciones de los archivos
     handleChangeUbic(ubic,id_rec){
@@ -165,6 +167,8 @@ class ListarComponentes extends Component {
                             <th>Concepto</th>
                             <th>Codigo</th>
                             <th>Recibo</th>
+                            <th>Importe</th>
+                            <th>Fecha</th>
                             <th>Ubicación</th>
                             <th>Verificar</th>
                             <th></th>
@@ -177,6 +181,8 @@ class ListarComponentes extends Component {
                                 <td>{dynamicData.concepto}</td>
                                 <td>{dynamicData.codigo}</td>
                                 <td>{dynamicData.numero}</td>
+                                <td>{dynamicData.importe}</td>
+                                <td>{dynamicData.fecha}</td>
                                 <td><Combo items={Datos} val={this.handleChangeUbic} ubic={dynamicData.ubic}
                                            id_rec={dynamicData.id_rec}/></td>
 
