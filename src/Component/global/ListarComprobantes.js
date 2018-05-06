@@ -21,17 +21,19 @@ class ListarComponentes extends Component {
        this.verificar=this.verificar.bind(this);
        this.state={
            data:null,
-           JSON:[]
+           JSON:[],
+           isLoading:false
        }
     }
-    componentWillReceiveProps(nextProps) {
+    componentWillMount(){
         let arreglo = [];
-        const lista = nextProps.listado;
-       console.log(nextProps.listado);
+        const lista = this.props.listado;
+    //   console.log("willRecive=>"+lista);
         if (lista !== null) {
             lista.map((item,key) => {
-                arreglo=arreglo.concat(new this.Obj(item.id_rec, item.observacion, item.id_ubicacion,item.validado,item.nombre,
+                arreglo=arreglo.concat(new this.Obj(item.id_rec,item.observacion,item.id_ubicacion && item.id_ubicacion,item.validado,item.nombre,
                     item.concepto,item.codigo,item.numero,item.importe,item.fecha));
+                return null;
             });
            // console.log(arreglo);
             this.setState({
@@ -43,7 +45,10 @@ class ListarComponentes extends Component {
     }
 
     // crear un objeto para enviar al server
-    crearJSON(id_rec,obs,flag,ubic=0){
+    crearJSON(id_rec,obs,flag,ubic){
+        if(obs==null)obs="";
+        if(ubic==null)ubic=0;
+        if(flag==null)flag=false;
         this.id_rec=id_rec;
         this.obs=flag+"-"+obs;
         this.ubic=ubic;
@@ -55,11 +60,12 @@ class ListarComponentes extends Component {
         let arreglo2=[];
         arreglo.map(item=>{
             arreglo2=arreglo2.concat(new this.crearJSON(item.id_rec,item.obs,item.validado,item.ubic))
+            return null;
         });
         this.setState({
            JSON:arreglo2
         });
-       // console.log(arreglo2);
+      //  console.log(arreglo2);
         return arreglo2;
     }
 
@@ -82,6 +88,7 @@ class ListarComponentes extends Component {
             if(items.id_rec===id_rec){
                 items.ubic=ubic;
             }
+            return null;
         });
     }
 //recibe el estado de los checks cada vez que se pulsa sobre ellos
@@ -91,6 +98,7 @@ class ListarComponentes extends Component {
            if(items.id_rec===id){
                 items.validado = validado;
            }
+           return null;
         });
       //  console.log(this.state.data);
     }
@@ -103,6 +111,7 @@ class ListarComponentes extends Component {
             if (items.id_rec === id_rec) {
                 items.obs = text;
             }
+            return null;
         },
            {data:prevState.data
         })
@@ -121,8 +130,11 @@ class ListarComponentes extends Component {
     handleEnviarData() {
         //console.log(this.state.JSON);
         const arreglo=this.verificar();
-       // console.log(arreglo);
+        //console.log(JSON.stringify(arreglo));
         const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/id';
+        this.setState({
+           isLoading:true
+        });
         fetch(url,{
 
             method: 'POST',
@@ -135,6 +147,9 @@ class ListarComponentes extends Component {
             .then(res => res.json())
             .then(res => {
                 if (res.status) { // exito
+                    this.setState({
+                       isLoading:false
+                    });
                     alert('Datos cargados exitosamente');
                 }
             })
@@ -142,7 +157,7 @@ class ListarComponentes extends Component {
     }
     render() {
         const listado = this.state.data;
-       // console.log(listado);
+        //console.log("render=>"+listado);
         if (listado == null) {
             return (
                 <div></div>

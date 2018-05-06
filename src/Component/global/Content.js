@@ -19,7 +19,8 @@ class Content extends Component{
             dates2:"",
             mensaje:"",
             estado: false,
-            operacion:''
+            operacion:'',
+            isLoading:false
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -30,37 +31,60 @@ class Content extends Component{
         this.handleInputRecibo=this.handleInputRecibo.bind(this);
         this.handleInputDni=this.handleInputDni.bind(this);
         this.handleSearchKey=this.handleSearchKey.bind((this));
+        this.mostrarData=this.mostrarData.bind(this);
     }
     // leer del input Concepto
     handleInputConcepto(data){
             this.setState({
-                concepto:data.target.value
+                concepto:data.target.value,
+                mensaje:""
         });
+    }
+    mostrarData(){
+        let contenedor="";
+        if(this.state.estado){
+           // console.log(this.state.lista);
+            switch (this.state.operacion){
+                case "V": contenedor=(<div className="alert alert-info">{this.state.mensaje}</div>);break;
+                case true: contenedor=(<div><Listardatos listado={this.state.lista}/></div>);break;
+                case false: contenedor=(<div className="alert alert-info">{this.state.mensaje}</div>);break;
+                default: contenedor=(<div></div>);
+            }
+        }
+        return contenedor;
     }
 
     //leer del input recibo
     handleInputRecibo(data){
         this.setState({
-            recibo: data.target.value
+            recibo: data.target.value,
+            mensaje:"",
+            operacion:"c"
         });
     }
     //leer del input DNI
     handleInputDni(data){
         this.setState({
-            dni: data.target.value
+            dni: data.target.value,
+            mensaje:"",
+            operacion:"c"
         });
     }
     // funcion del calendario en date se almacena la fecha seleccionada
     handleChange(date) {
         this.setState({
-            dates: date.target.value
+            dates: date.target.value,
+            mensaje:"",
+            operacion:"c"
         });
         console.log(date.target.value);
         console.log(this.state.dates);
     }
     handleChange2(date) {
         this.setState({
-            dates2: date.target.value
+            dates2: date.target.value,
+            mensaje:"",
+            operacion:"c"
         });
       //  console.log(this.state.dates2);
     }
@@ -69,7 +93,9 @@ class Content extends Component{
     handleInputName(e){
         if(e.target.id==="busca"){
             this.setState({
-                nombre_apellido: e.target.value
+                nombre_apellido: e.target.value,
+                mensaje:"",
+                operacion:"c"
             });
         }
     }
@@ -89,7 +115,8 @@ class Content extends Component{
                mensaje:"Casilleros vacios",
                estado:true,
                operacion:'V',
-               lista:[]
+               lista:[],
+               isLoading:false
            });
        }else{
            let arra = {
@@ -100,6 +127,11 @@ class Content extends Component{
                "voucher":this.state.recibo,
                "dni":this.state.dni
            };
+           this.setState({
+               isLoading:true,
+               mensaje:"",
+               operacion:"c"
+           });
            fetch(url, {
 
                method: 'POST',
@@ -117,9 +149,11 @@ class Content extends Component{
                    this.setState({
                        lista: responseJson.data,
                        estado:true,
-                       operacion:responseJson.status
+                       operacion: (responseJson.data!==null && responseJson.data.length!==0),
+                       mensaje:(responseJson.data!==null && responseJson.data.length!==0)?(""):("Datos no encontrados"),
+                       isLoading:false
                    });
-                   //console.log( responseJson);
+                   //console.log( responseJson.data.length);
                });
 
        }
@@ -164,9 +198,8 @@ class Content extends Component{
                     <button id="Buscar" onClick={this.handleSearchClick} onKeyPress={this.handleSearchKey}className="btn btn-outline-success">Buscar</button>
 
                 </div>
-
-                <div className="listar">
-                    <div className="listar"><Listardatos listado={this.state.lista} /></div>
+                <div className={(this.state.isLoading)?("isLoading"):("listar")}>
+                    {this.mostrarData()}
                 </div>
 
             </div>
