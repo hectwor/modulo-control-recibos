@@ -50,7 +50,8 @@ class ListarComponentes extends Component {
         if(ubic==null)ubic=0;
         if(flag==null)flag=false;
         this.id_rec=id_rec;
-        this.obs=flag+"-"+obs;
+        this.check=flag;
+        this.obs=obs;
         this.ubic=ubic;
     }
 
@@ -130,7 +131,7 @@ class ListarComponentes extends Component {
     handleEnviarData() {
         //console.log(this.state.JSON);
         const arreglo=this.verificar();
-        //console.log(JSON.stringify(arreglo));
+        console.log(JSON.stringify(arreglo));
         const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/id';
         this.setState({
            isLoading:true
