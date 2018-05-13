@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Listardatos from './ListarComprobantes';
+import { Link } from "react-router-dom";
 import './css/Content.css';
 import './css/bootstrap.css';
 
@@ -196,6 +197,8 @@ class Content extends Component{
                         <input id="recibo" type="text" className="form-control" value={this.state.recibo} onChange={this.handleInputRecibo} placeholder="ejem:cod1,cod2,..." aria-label="Username" aria-describedby="basic-addon1"></input>
                     </div>
                     <button id="Buscar" onClick={this.handleSearchClick} onKeyPress={this.handleSearchKey}className="btn btn-outline-success">Buscar</button>
+
+                    <Link to="/nueva" className="btn btn-outline-success">Agregar</Link>
 
                 </div>
                 <div className={(this.state.isLoading)?("isLoading"):("listar")}>

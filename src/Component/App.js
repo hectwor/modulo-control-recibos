@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import './global/css/App.css';
-import Header from './global/Header';
-import Content from './global/Content';
-import Footer from './global/Footer';
+
+import { Switch, Route } from "react-router-dom";
+import CheckCollection from "./CheckCollection";
+import NewCollection from "./NewCollection";
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header />
-        <Content/>
-        <Footer />
+          <Switch>
+              <Route exact path="/" component={CheckCollection} />
+              <Route path="/nueva" component={NewCollection} />
+          </Switch>
+
       </div>
-      
     );
   }
 }
