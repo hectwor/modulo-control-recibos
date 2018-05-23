@@ -81,7 +81,16 @@ class ListarComponentes extends Component {
         this.codigo=codigo;
         this.numero=numero;
         this.importe=importe;
-        this.fecha= fecha && fecha.substr(0,10);
+        //console.log(convertDateFormat(fecha.substr(0,10)));
+        if(fecha!==null){
+            let fTemp=fecha.substr(0,10).split("-");
+            let tam=fTemp.length,i=0,fFinal="";
+            for(i=tam-1;i>=0;i--){
+                fFinal=fFinal+"/"+fTemp[i];
+            }
+            this.fecha=fFinal.slice(1,11);
+        }
+        else this.fecha=fecha;
     }
 //recibe las ubicaciones de los archivos
     handleChangeUbic(ubic,id_rec){
@@ -159,20 +168,7 @@ class ListarComponentes extends Component {
     render() {
         const listado = this.state.data;
         //console.log("render=>"+listado);
-        if (listado == null) {
-            return (
-                <div></div>
-            );
-        } else if (listado === "") {
-            return (
-                <div className="alert alert-info">Casilleros vacíos</div>
-            );
-        } else if (listado.length === 0) {
 
-            return (
-                <div className="alert alert-info">Datos no encontrados</div>
-            );
-        } else {
             return (
                 <div className="table-scroll">
                     <table className="tabla">
@@ -218,7 +214,6 @@ class ListarComponentes extends Component {
                     <button id="Enviar" onClick={this.handleEnviarData} className="btn btn-danger">Registrar</button>
                 </div>
             );
-        }
     }
 }
 
