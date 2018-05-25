@@ -6,7 +6,7 @@ body{
 	margin-left: 30%;
 	margin-top: 10px;
 	margin-right: 30%;
-	text-align: center;
+	text-align: center
 }
 .calendar{
 	width: 400px;
@@ -28,6 +28,23 @@ body{
 .calendario_2{
 	margin-left: 13px;
 	font-size: 14px;
+}
+.Botones
+{
+	width: 5%;
+	position: absolute;
+	top:18%;
+	right:18%;
+}
+.Buton-contenedor{
+	position: relative;
+}
+.Buton-contenedor a{
+	margin-top: 20px;
+	width: 90px;
+}
+.Buton-contenedor button{
+	width: 90px;
 }
 .isLoading {
 	border: 16px solid #f3f3f3;
