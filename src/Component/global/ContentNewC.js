@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from "react-router-dom";
 import Listardatos from './ListarComprobantesNewC';
 import './css/Content.css';
 import './css/bootstrap.css';
@@ -32,6 +33,7 @@ class Content extends Component{
         this.handleInputRecibo=this.handleInputRecibo.bind(this);
         this.handleInputDni=this.handleInputDni.bind(this);
         this.handleSearchKey=this.handleSearchKey.bind((this));
+        this.handleKeyPress = this.handleKeyPress.bind((this));
         this.mostrarData=this.mostrarData.bind(this);
     }
     // leer del input Concepto
@@ -157,7 +159,11 @@ class Content extends Component{
                 });
         }
     }
-
+    handleKeyPress = (event) => {
+        if(event.key === 'Enter'){
+            this.handleSearchClick();
+        }
+    };
     render(){
         return(
             <div className="content">
@@ -167,7 +173,8 @@ class Content extends Component{
                             <div className="input-group-prepend">
                                 <span className="input-group-text" id="basic-addon1">Nombre o Apellido</span>
                             </div>
-                            <input id="busca" type="text" className="form-control" value={this.state.nombre_apellido} onChange={this.handleInputName} placeholder="nombre o apellido" aria-label="Username" aria-describedby="basic-addon1"></input>
+                            <input id="busca" type="text" className="form-control" value={this.state.nombre_apellido} onChange={this.handleInputName} placeholder="nombre o apellido" aria-label="Username" aria-describedby="basic-addon1"
+                                   onKeyPress={this.handleKeyPress}></input>
 
                         </div>
                         {/* <div className="input-group mb-3">
@@ -181,7 +188,8 @@ class Content extends Component{
                             <div className="input-group-prepend">
                                 <span className="input-group-text" id="basic-addon1">DNI o Codigo</span>
                             </div>
-                            <input id="dni" type="text" className="form-control" value={this.state.dni} onChange={this.handleInputDni} placeholder="codigo" aria-label="Username" aria-describedby="basic-addon1"></input>
+                            <input id="dni" type="text" className="form-control" value={this.state.dni} onChange={this.handleInputDni} placeholder="codigo" aria-label="Username" aria-describedby="basic-addon1"
+                                   onKeyPress={this.handleKeyPress}></input>
                         </div>
                         {/* <div className="input-group mb-3">
                         <div className="input-group-prepend">
@@ -200,7 +208,8 @@ class Content extends Component{
                     </div>
                     <div className="Botones">
                         <div className="Buton-contenedor">
-                            <button id="Buscar" onClick={this.handleSearchClick} onKeyPress={this.handleSearchKey} className="btn btn-outline-success">Buscar</button>
+                            <button id="Buscar" onClick={this.handleSearchClick} className="btn btn-outline-success">Buscar</button>
+                            <Link to="/" className="btn btn-outline-success">Regresar </Link>
                         </div>
                     </div>
                 </div>

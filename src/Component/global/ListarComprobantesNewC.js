@@ -6,6 +6,7 @@ import Combodos from './Combodos';
 import Check from './Check';
 import './css/DatosCSS.css';
 import './css/bootstrap.css';
+import './css/ListarComprobanteNewC.css';
 import Datos from './Datos/Items';
 import Datos2 from './Datos/Tipo';
 import Content from './ContentNewC';
@@ -27,7 +28,8 @@ class ListarComponentes extends Component {
         this.state={
             data:null,
             JSON:[],
-            isLoading:false
+            isLoading:false,
+            isNew:false
         }
     }
 
@@ -158,10 +160,11 @@ class ListarComponentes extends Component {
 
 // nu c
     handleNuevo(){
-        var fila="<tr>"+
+        this.setState({isNew:true});
+        let fila="<tr>"+
             "<td>0</td>"+
             "<td>"+Content.nombre_apellido+"</td>"+
-            "<td><input type='text'size=6 maxlength='6' name='concepto' /></td><td>codigo</td>"+
+            "<td><input type='text' size=6 maxlength='6' name='concepto' /></td><td>codigo</td>"+
             "<td><input type='text' size=8 maxlength='8' /></td>"+
             "<td><input type='text' size=7 maxlength='7'/></td>"+
             "<td><input type='date' aria-label='Username' aria-describedby='basic-addon1' /></td>"+
@@ -171,7 +174,7 @@ class ListarComponentes extends Component {
             "change={this.handleChangeEstado}/></td>"+
             "<td>"+
             "<button type='button' onClick={this.openModal} id={dynamicData.obs}"+
-            "name={dynamicData.id_rec} className='btn" +
+            "name={dynamicData.id_rec} className='btn'" +
             "btn-primary'>Observaciones"+
             "</button>"+
             "</td>"+
@@ -241,7 +244,12 @@ class ListarComponentes extends Component {
             return (
                 <div className="table-scroll">
                     <div className="botones">
-                        <button id="btnNuevaR"  onClick={this.handleNuevo} className="btn btn-outline-success">Nueva</button>
+                        <div className="container">
+                            <button id="btnNuevaR"  onClick={this.handleNuevo} className="btn btn-outline-success">Nueva</button>
+                        </div>
+                        <div className={(this.state.isNew)?("block"):("none")}>
+                            <button id="Registrar" onClick={this.handleEnviarData} className="btn btn-outline-success">Registrar</button>
+                        </div>
                         <p> </p>
                     </div>
                     <table className="tabla" id="table">
@@ -287,9 +295,6 @@ class ListarComponentes extends Component {
                         )}
                         </tbody>
                     </table>
-                    <div className="botones">
-                        <button id="Enviar" onClick={this.handleEnviarData} className="btn btn-danger">Registrar</button>
-                    </div>
                 </div>
             );
         }
