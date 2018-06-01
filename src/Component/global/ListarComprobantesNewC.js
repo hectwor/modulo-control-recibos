@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {ModalManager} from 'react-dynamic-modal';
 import MyModal from './MyModal';
-import Combo from './Combo';
-import Combodos from './Combodos';
+import Combo from './ComboNewC';
+import Combodos from './CombodosNewC';
 import Check from './Check';
 import './css/DatosCSS.css';
 import './css/bootstrap.css';
@@ -284,7 +284,7 @@ class ListarComponentes extends Component {
                                               id_rec={dynamicData.id_rec}/></td>
                                 <td>
                                     <Check validado={dynamicData.validado} id={dynamicData.id_rec}
-                                           change={this.handleChangeEstado}/>
+                                           change={this.handleChangeEstado} disabled={true} />
                                 </td>
                                 <td>
                                     <button type="button" onClick={this.openModal} id={dynamicData.obs}
