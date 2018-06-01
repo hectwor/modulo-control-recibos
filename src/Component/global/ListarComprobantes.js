@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {ModalManager} from 'react-dynamic-modal';
 import MyModal from './MyModal';
+import Modal2 from './Modal2';
 import Combo from './Combo';
 import Check from './Check';
 import './css/DatosCSS.css';
@@ -19,8 +20,11 @@ class ListarComponentes extends Component {
        this.handleChangeEstado=this.handleChangeEstado.bind(this);
        this.crearJSON=this.crearJSON.bind(this);
        this.verificar=this.verificar.bind(this);
+       this.groupBy = this.groupBy.bind(this);
+      this.eventoNombre = this.eventoNombre.bind(this);
        this.state={
            data:null,
+          dataOrdenada: null,
            JSON:[],
            isLoading:false
        }
@@ -41,6 +45,22 @@ class ListarComponentes extends Component {
             }/*, function () {
                 console.log("call"+this.state.data)
             }*/)
+            const listadoOrdenado = lista.sort(function (a, b) {
+                                                  if (a.nombre > b.nombre) {
+                                                    return 1;
+                                                  }
+                                                  if (a.nombre < b.nombre) {
+                                                    return -1;
+                                                  }
+                                                  //iguales
+                                                  return 0;
+                                                });
+
+        const nuevaLista = this.groupBy(listadoOrdenado,'nombre');
+          console.log( nuevaLista );
+          this.setState({
+             dataOrdenada:nuevaLista
+          });
         }
     }
 
@@ -129,6 +149,12 @@ class ListarComponentes extends Component {
 
        // console.log(this.state.data);
     }
+    groupBy(xs, key) {
+      return xs.reduce(function(rv, x) {
+        (rv[x[key]] = rv[x[key]] || []).push(x);
+        return rv;
+      }, {});
+    }
     // abre el componente MyModal para ingresar observaciones
     openModal(e){
         //https://github.com/xue2han/react-dynamic-modal
@@ -165,6 +191,11 @@ class ListarComponentes extends Component {
             })
         //https://github.com/calambrenet/react-table/blob/master/src/react-table.jsx
     }
+    eventoNombre()
+    {
+      console.log("entrò");
+      ModalManager.open(<Modal2 text={this.state.dataOrdenada}/>);
+    }
     render() {
         const listado = this.state.data;
         //console.log("render=>"+listado);
@@ -189,7 +220,7 @@ class ListarComponentes extends Component {
                         <tbody>{listado.map((dynamicData, i) =>
                             <tr key={i}>
                                 <td>{i + 1}</td>
-                                <td>{dynamicData.nombre}</td>
+                                <td onClick={this.eventoNombre}>{dynamicData.nombre}</td>
                                 <td>{dynamicData.concepto}</td>
                                 <td>{dynamicData.codigo}</td>
                                 <td>{dynamicData.numero}</td>
