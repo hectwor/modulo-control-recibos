@@ -80,7 +80,7 @@ class ListarComponentes extends Component {
         const arreglo=this.state.data;
         let arreglo2=[];
         arreglo.map(item=>{
-            arreglo2=arreglo2.concat(new this.crearJSON(item.id_rec,item.obs,item.validado,item.ubic))
+            arreglo2=arreglo2.concat(new this.crearJSON(item.id_rec,item.obs,item.validado,item.ubic));
             return null;
         });
         this.setState({

@@ -40,9 +40,11 @@ class MyModal extends Component{
     }
     sumaT(){
         let suma=0;
-        {this.state.data[Object.keys(this.state.data)[this.state.index]].map((dynamicData, i) =>
-            suma=suma+ parseFloat(dynamicData.importe)
-        )}
+        let arr=this.state.data;
+        arr[Object.keys(arr)[this.state.index]].map((dynamicData, i) =>{
+            suma=suma+ parseFloat(dynamicData.importe);
+            return null;
+        })
        // console.log(suma);
             return suma;
     }
