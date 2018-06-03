@@ -24,7 +24,7 @@ class ListarComponentes extends Component {
       this.eventoNombre = this.eventoNombre.bind(this);
        this.state={
            data:null,
-          dataOrdenada: null,
+           dataOrdenada: null,
            JSON:[],
            isLoading:false
        }
@@ -44,8 +44,8 @@ class ListarComponentes extends Component {
                 data: arreglo
             }/*, function () {
                 console.log("call"+this.state.data)
-            }*/)
-            const listadoOrdenado = lista.sort(function (a, b) {
+            }*/);
+            const listadoOrdenado = arreglo.sort(function (a, b) {
                                                   if (a.nombre > b.nombre) {
                                                     return 1;
                                                   }
@@ -57,7 +57,7 @@ class ListarComponentes extends Component {
                                                 });
 
         const nuevaLista = this.groupBy(listadoOrdenado,'nombre');
-          console.log( nuevaLista );
+         // console.log( nuevaLista );
           this.setState({
              dataOrdenada:nuevaLista
           });
@@ -191,10 +191,11 @@ class ListarComponentes extends Component {
             })
         //https://github.com/calambrenet/react-table/blob/master/src/react-table.jsx
     }
-    eventoNombre()
+    eventoNombre(e)
     {
-      console.log("entrò");
-      ModalManager.open(<Modal2 text={this.state.dataOrdenada}/>);
+      //console.log(e.target.innerHTML);
+      let nom=e.target.innerHTML
+      ModalManager.open(<Modal2 text={this.state.dataOrdenada} nombre={nom}/>);
     }
     render() {
         const listado = this.state.data;
@@ -220,7 +221,7 @@ class ListarComponentes extends Component {
                         <tbody>{listado.map((dynamicData, i) =>
                             <tr key={i}>
                                 <td>{i + 1}</td>
-                                <td onClick={this.eventoNombre}>{dynamicData.nombre}</td>
+                                <td onClick={(e)=>this.eventoNombre(e)} title="click para ver detaller" className="detalles">{dynamicData.nombre}</td>
                                 <td>{dynamicData.concepto}</td>
                                 <td>{dynamicData.codigo}</td>
                                 <td>{dynamicData.numero}</td>

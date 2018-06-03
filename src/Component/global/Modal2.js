@@ -1,42 +1,55 @@
 import React,{Component} from 'react';
 import {Modal,ModalManager,Effect} from 'react-dynamic-modal';
 import './css/bootstrap.css';
-
+import './css/Modal2.css';
 class MyModal extends Component{
 
     constructor(){
         super();
-        this.handlerGuardar=this.handlerGuardar.bind(this);
+      //  this.handlerGuardar=this.handlerGuardar.bind(this);
         this.texto=React.createRef();
         this.groupBy=this.groupBy.bind(this);
+        this.sumaT=this.sumaT.bind(this);
         this.state={
-           data:null
+           data:null,
+            index:0
         }
     }
       componentWillMount(){
-        const {text} = this.props;
-        this.setState({
-          data:text
+        const {text,nombre} = this.props;
+        let i=0;
+        Object.keys(text).map((data,index)=>{
+            if(data===nombre){
+                i=index;
+            }
+            return null;
         });
-        console.log(Object.keys(text)[0]);
+        console.log(i);
+        this.setState({
+          data:text,
+          index:i
+        });
+        //console.log(Object.keys(text));
         //console.log(text["FLORES RAMIREZ MARTHA POLI"]);
       }
-    handlerGuardar(){
-      //  let data=this.texto.current.value;
-       // console.log(data);
-        //this.props.change(data,this.props.id_rec);
-        ModalManager.close();
-    }
     groupBy(xs, key) {
       return xs.reduce(function(rv, x) {
         (rv[x[key]] = rv[x[key]] || []).push(x);
         return rv;
       }, {});
     }
+    sumaT(){
+        let suma=0;
+        {this.state.data[Object.keys(this.state.data)[this.state.index]].map((dynamicData, i) =>
+            suma=suma+ parseFloat(dynamicData.importe)
+        )}
+       // console.log(suma);
+            return suma;
+    }
     render(){
     //  console.log(this.state.data);
       const text=this.state.data;
-      console.log(text);
+      //console.log(text);
         return (
             <Modal
                 //onRequestClose={onRequestClose}
@@ -56,7 +69,7 @@ class MyModal extends Component{
                                 <th></th>
                             </tr>
                             </thead>
-                            <tbody>{text[Object.keys(this.state.data)[0]].map((dynamicData, i) =>
+                            <tbody>{text[Object.keys(this.state.data)[this.state.index]].map((dynamicData, i) =>
                                 <tr key={i}>
                                     <td>{i + 1}</td>
                                     <td>{dynamicData.concepto}</td>
@@ -65,7 +78,10 @@ class MyModal extends Component{
                                     <td>{dynamicData.fecha}</td>
                                 </tr>
                             )}
-                              <tr></tr>
+                              <tr >
+                                  <td colSpan={3} >Total</td>
+                                  <td className="total">{this.sumaT()}</td>
+                              </tr>
                             </tbody>
                           </table>
 
