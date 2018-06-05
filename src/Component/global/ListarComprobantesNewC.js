@@ -7,6 +7,7 @@ import Check from './Check';
 import './css/DatosCSS.css';
 import './css/bootstrap.css';
 import './css/ListarComprobanteNewC.css';
+import Modal2 from './MyModalNewC';
 import Datos from './Datos/Items';
 import Datos2 from './Datos/Tipo';
 import Content from './ContentNewC';
@@ -39,7 +40,7 @@ class ListarComponentes extends Component {
         if (lista !== null) {
             lista.map((item,key) => {
                 arreglo=arreglo.concat(new this.Obj(item.id_rec,item.observacion,item.id_ubicacion && item.id_ubicacion,item.tipo & item.tipo,item.validado,item.nombre,
-                    item.concepto,item.codigo,item.numero,item.importe,item.fecha));
+                    item.concepto,item.codigo,item.numero,item.importe,item.fecha,item.id_alum));
                 return null;
             });
             //console.log(arreglo);
@@ -89,7 +90,7 @@ class ListarComponentes extends Component {
     }
 
 //crea un objeto para pasar al hijo
-    Obj(id_rec,obs,ubic,tipo,validado,nombre,concepto,codigo,numero,importe,fecha){
+    Obj(id_rec,obs,ubic,tipo,validado,nombre,concepto,codigo,numero,importe,fecha,id_alum){
         this.id_rec=id_rec;
         this.obs=obs;
         this.ubic=ubic;
@@ -101,6 +102,7 @@ class ListarComponentes extends Component {
         this.numero=numero;
         this.importe=importe;
         this.fecha= fecha && fecha.substr(8,2)+"-"+fecha.substr(5,2)+"-"+fecha.substr(0,4);
+        this.id=id_alum;
     }
 //recibe las ubicaciones de los archivos
     handleChangeUbic(ubic,id_rec){
@@ -224,6 +226,13 @@ class ListarComponentes extends Component {
         });
     }
 
+    eventoNombre(e)
+    {
+      let id=e;
+      ModalManager.open(<Modal2 />);
+    }
+
+
     render() {
         const listado = this.state.data;
         //console.log("render=>"+listado);
@@ -244,9 +253,9 @@ class ListarComponentes extends Component {
             return (
                 <div className="table-scroll">
                     <div className="botones">
-                        <div className="container">
+                        {/* <div className="container">
                             <button id="btnNuevaR"  onClick={this.handleNuevo} className="btn btn-outline-success">Nueva</button>
-                        </div>
+                        </div> */}
                         <div className={(this.state.isNew)?("block"):("none")}>
                             <button id="Registrar" onClick={this.handleEnviarData} className="btn btn-outline-success">Registrar</button>
                         </div>
@@ -271,7 +280,7 @@ class ListarComponentes extends Component {
                         <tbody id="table">{listado.map((dynamicData, i) =>
                             <tr key={i}>
                                 <td>{i + 1}</td>
-                                <td>{dynamicData.nombre}</td>
+                                <td onClick={(e)=>this.eventoNombre(dynamicData.id)} title="click para añadir un nuevo registro" className="detalles">{dynamicData.nombre}</td>
                                 <td>{dynamicData.concepto}</td>
                                 <td>{dynamicData.codigo}</td>
                                 <td>{dynamicData.numero}</td>

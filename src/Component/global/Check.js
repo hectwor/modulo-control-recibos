@@ -8,8 +8,8 @@ class Check extends Component{
     render(){
         const {validado,id}=this.props;
         return (
-            (validado) ? (<input id={id} type="checkbox" className="DatosCSS-input-checkbox"  defaultChecked disabled onClick={(e)=>{this.props.change(e,id)}}/>)
-                       : ( <input id={id} type="checkbox" className="DatosCSS-input-checkbox" onClick={(e)=>{this.props.change(e,id)}}/> )
+            (validado) ? (<input id={id} type="checkbox" className="DatosCSS-input-checkbox"  defaultChecked disabled={this.props.disabled} onClick={(e)=>{this.props.change(e,id)}}/>)
+                       : ( <input id={id} type="checkbox" className="DatosCSS-input-checkbox"  disabled={this.props.disabled} onClick={(e)=>{this.props.change(e,id)}}/> )
         );
 }
 
