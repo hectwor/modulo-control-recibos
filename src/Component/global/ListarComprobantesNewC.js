@@ -226,10 +226,11 @@ class ListarComponentes extends Component {
         });
     }
 
-    eventoNombre(e)
+    eventoNombre(e,f)
     {
       let id=e;
-      ModalManager.open(<Modal2 />);
+      let nom=f;
+      ModalManager.open(<Modal2 id={id} nombre={nom}/>);
     }
 
 
@@ -280,7 +281,7 @@ class ListarComponentes extends Component {
                         <tbody id="table">{listado.map((dynamicData, i) =>
                             <tr key={i}>
                                 <td>{i + 1}</td>
-                                <td onClick={(e)=>this.eventoNombre(dynamicData.id)} title="click para añadir un nuevo registro" className="detalles">{dynamicData.nombre}</td>
+                                <td onClick={(e)=>this.eventoNombre(dynamicData.id, dynamicData.nombre)} title="click para añadir un nuevo registro" className="detalles" nam={dynamicData.nombre}>{dynamicData.nombre}</td>
                                 <td>{dynamicData.concepto}</td>
                                 <td>{dynamicData.codigo}</td>
                                 <td>{dynamicData.numero}</td>
