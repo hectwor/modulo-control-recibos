@@ -5,15 +5,45 @@ import './css/bootstrap.css';
 import './css/NewC.css';
 import './css/ListarComprobanteNewC.css';
 class MyModal extends Component{
-
     constructor(){
         super();
         this.handlerGuardar=this.handlerGuardar.bind(this);
         // this.texto=React.createRef();
     }
+    componentWillMount(){
+      let data;
+      ///////////
+      const url= 'https://api-modulocontrol.herokuapp.com/conceptos';
+      fetch(url,{
+          method: 'GET',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            }
+          //body: JSON.stringify(data)
+                  })
+          .then(res => res.json())
+          .then(res => {
+              if (res.status) { // exito
+                  console.log(res);
+                  data=res;
+                  console.log(data);
+                  // Llenar select de conceptos
+                  var x = document.getElementById("concepto");
+                  for (var i = 0; i < data["data"].length; i++) {
+                    var miOption=document.createElement("option");
+                    miOption.text = data["data"][i]["concepto"];
+                    miOption.setAttribute("value",data["data"][i]["id_concepto"]);
+                    x.add(miOption);
+                  }
+              }
+          });
+    }
+
+
+
 
     handlerGuardar(){
-        //let data=this.texto.current.value;
         if(document.getElementById("verificar").value === "true"){
           var verif=true;
         }else{
@@ -43,15 +73,16 @@ class MyModal extends Component{
             .then(res => res.json())
             .then(res => {
                 if (res.status) { // exito
-                    alert('Datos cargados exitosamente');
-                }else{}
+                    alert('Datos creados exitosamente');
+                    ModalManager.close();
+                }
             });
     }
 
 
-
     render(){
         let nombre = this.props.nombre;
+        let codigo = this.props.codigo;
         return (
             <Modal
                 effect={Effect.SlideFromBottom}>
@@ -60,19 +91,19 @@ class MyModal extends Component{
          <form>
              <div className="form-group">
                  <label >Nombres y Apellidos</label>
-                 <input type="text" className="form-control" placeholder="Nombres" id="nombre" value={nombre} required/>
+                 <input type="text" className="form-control" placeholder="Nombres" id="nombre" value={nombre} disabled required/>
              </div>
              <div className="form-group">
                  <label >Concepto de Pago</label>
-                 <input type="text" className="form-control" placeholder="Concepto" id="concepto" required/>
+                 <select required id ="concepto" className="form-control" ></select>
              </div>
              <div className="form-group">
                  <label >Codigo</label>
-                 <input type="text" className="form-control" placeholder="Codigo" id="codigo" required/>
+                 <input type="number" className="form-control" placeholder="Codigo" id="codigo" value={codigo} disabled required/>
              </div>
              <div className="form-group">
                  <label>Recibo</label>
-                 <input type="text" className="form-control" placeholder="Recibo" id="recibo" required/>
+                 <input type="number" className="form-control" placeholder="Recibo" id="recibo" required/>
              </div>
              <div className="form-group">
                  <label>Importe</label>
@@ -115,9 +146,12 @@ class MyModal extends Component{
              <button type = "button" className = "btn btn-primary" onClick = {this.handlerGuardar}> Enviar </button>
          </form>
         </div>
-
+        <script>
+          window.onload=llenarConceptos;
+        </script>
             </Modal>
         );
     }
+
 }
 export default MyModal;

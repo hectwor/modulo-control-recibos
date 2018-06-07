@@ -3,6 +3,7 @@ import React,{Component} from 'react';
 import  './css/Combo.css';
 import './css/bootstrap.css';
 
+import Datos from './Datos/Tipo';
 class Combo extends Component{
     constructor(){
         super();
@@ -13,11 +14,11 @@ class Combo extends Component{
 
         let num=0;
         switch (e.target.value) {
-            case "Banco":num=1;
+            case Datos[1].nombre:num=1;
                 break;
-            case "Manual":num=2;
+            case Datos[2].nombre:num=2;
                 break;
-            case "Seleccione Tipo":num="";
+            case "Seleccione ubicación":num="";
                 break;
             default:
                 num = "";

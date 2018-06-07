@@ -10,8 +10,6 @@ import './css/ListarComprobanteNewC.css';
 import Modal2 from './MyModalNewC';
 import Datos from './Datos/Items';
 import Datos2 from './Datos/Tipo';
-import Content from './ContentNewC';
-import $ from 'jquery';
 
 class ListarComponentes extends Component {
     constructor(...props){
@@ -23,7 +21,6 @@ class ListarComponentes extends Component {
         this.handleChangeType=this.handleChangeType.bind(this);
         this.Obj=this.Obj.bind(this);
         this.handleChangeEstado=this.handleChangeEstado.bind(this);
-        this.handleNuevo=this.handleNuevo.bind((this));
         this.crearJSON=this.crearJSON.bind(this);
         this.verificar=this.verificar.bind(this);
         this.state={
@@ -116,6 +113,7 @@ class ListarComponentes extends Component {
 
 //recibe el tipo de los archivos
     handleChangeType(tipo,id_rec){
+      console.log(this.state.data);
         this.state.data.map(items=>{
             if(items.id_rec===id_rec){
                 items.tipo=tipo;
@@ -160,31 +158,6 @@ class ListarComponentes extends Component {
         ModalManager.open(<MyModal text={text} id_rec={id_re} change={this.handleChangeObs}/>);
     }
 
-// nu c
-    handleNuevo(){
-        this.setState({isNew:true});
-        let fila="<tr>"+
-            "<td>0</td>"+
-            "<td>"+Content.nombre_apellido+"</td>"+
-            "<td><input type='text' size=6 maxlength='6' name='concepto' /></td><td>codigo</td>"+
-            "<td><input type='text' size=8 maxlength='8' /></td>"+
-            "<td><input type='text' size=7 maxlength='7'/></td>"+
-            "<td><input type='date' aria-label='Username' aria-describedby='basic-addon1' /></td>"+
-            "<td><Combo items={Datos} val={this.handleChangeUbic} ubic={dynamicData.ubic} id_rec={dynamicData.id_rec}/></td>"+
-            "<td><Combo items={Datos2} val={this.handleChangeUbic} ubic={dynamicData.tipo} id_rec={dynamicData.id_rec}/></td>"+
-            "<td><Check validado={dynamicData.validado} id={dynamicData.id_rec}"+
-            "change={this.handleChangeEstado}/></td>"+
-            "<td>"+
-            "<button type='button' onClick={this.openModal} id={dynamicData.obs}"+
-            "name={dynamicData.id_rec} className='btn'" +
-            "btn-primary'>Observaciones"+
-            "</button>"+
-            "</td>"+
-            "</tr>";
-        $('#table').prepend(fila);
-    }
-
-
 // envia un JSON al server
     handleEnviarData() {
         //console.log(this.state.JSON);
@@ -218,20 +191,15 @@ class ListarComponentes extends Component {
         //https://github.com/calambrenet/react-table/blob/master/src/react-table.jsx
     }
 
-    funcionfila(){
-        $("#Nuevo").click(function () {
-            var nFilas = $("#table tr").length;
-            console.log(nFilas);
-            return nFilas;
-        });
-    }
 
-    eventoNombre(e,f)
-    {
-      let id=e;
-      let nom=f;
-      ModalManager.open(<Modal2 id={id} nombre={nom}/>);
-    }
+        eventoNombre(e,f,c)
+        {
+
+          let id=e;
+          let nom=f;
+          let cod = c;
+          ModalManager.open(<Modal2 id={id} nombre={nom} codigo={cod} />);
+        }
 
 
     render() {
@@ -281,7 +249,7 @@ class ListarComponentes extends Component {
                         <tbody id="table">{listado.map((dynamicData, i) =>
                             <tr key={i}>
                                 <td>{i + 1}</td>
-                                <td onClick={(e)=>this.eventoNombre(dynamicData.id, dynamicData.nombre)} title="click para añadir un nuevo registro" className="detalles" nam={dynamicData.nombre}>{dynamicData.nombre}</td>
+                                <td onClick={(e)=>this.eventoNombre(dynamicData.id, dynamicData.nombre, dynamicData.codigo)} title="click para añadir un nuevo registro" className="detalles" nam={dynamicData.nombre}>{dynamicData.nombre}</td>
                                 <td>{dynamicData.concepto}</td>
                                 <td>{dynamicData.codigo}</td>
                                 <td>{dynamicData.numero}</td>
@@ -290,7 +258,7 @@ class ListarComponentes extends Component {
                                 <td><Combo items={Datos} val={this.handleChangeUbic} ubic={dynamicData.ubic}
                                            id_rec={dynamicData.id_rec}/></td>
 
-                                <td><Combodos items={Datos2} val={this.handleChangeType} ubic={dynamicData.tipo}
+                                <td><Combodos items={Datos2} val={this.handleChangeType} tipo={dynamicData.tipo}
                                               id_rec={dynamicData.id_rec}/></td>
                                 <td>
                                     <Check validado={dynamicData.validado} id={dynamicData.id_rec}
