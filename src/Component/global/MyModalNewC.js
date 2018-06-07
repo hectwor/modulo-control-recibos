@@ -19,7 +19,7 @@ class MyModal extends Component{
         }else{
            verif=false
         }
-        var data = new Object();
+        var data = {};
         data.id_alum=this.props.id;
         data.id_concepto =document.getElementById("concepto").value;
         data.id_ubicacion =document.getElementById("ubicacion").value;
@@ -31,10 +31,8 @@ class MyModal extends Component{
         data.validado =verif;
         data.tipo =document.getElementById("tipo").value;
         //ModalManager.close();
-
         const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/new';
         fetch(url,{
-
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -45,13 +43,9 @@ class MyModal extends Component{
             .then(res => res.json())
             .then(res => {
                 if (res.status) { // exito
-                    this.setState({
-                       isLoading:false
-                    });
                     alert('Datos cargados exitosamente');
                 }else{}
-            })
-        console.log(data);
+            });
     }
 
 
@@ -66,31 +60,31 @@ class MyModal extends Component{
          <form>
              <div className="form-group">
                  <label >Nombres y Apellidos</label>
-                 <input type="text" class="form-control" placeholder="Nombres" id="nombre" value={nombre} required/>
+                 <input type="text" className="form-control" placeholder="Nombres" id="nombre" value={nombre} required/>
              </div>
              <div className="form-group">
                  <label >Concepto de Pago</label>
-                 <input type="text" class="form-control" placeholder="Concepto" id="concepto" required/>
+                 <input type="text" className="form-control" placeholder="Concepto" id="concepto" required/>
              </div>
              <div className="form-group">
                  <label >Codigo</label>
-                 <input type="text" class="form-control" placeholder="Codigo" id="codigo" required/>
+                 <input type="text" className="form-control" placeholder="Codigo" id="codigo" required/>
              </div>
              <div className="form-group">
                  <label>Recibo</label>
-                 <input type="text" class="form-control" placeholder="Recibo" id="recibo" required/>
+                 <input type="text" className="form-control" placeholder="Recibo" id="recibo" required/>
              </div>
              <div className="form-group">
                  <label>Importe</label>
-                 <input type="number" class="form-control" placeholder="Importe" id="importe" required/>
+                 <input type="number" className="form-control" placeholder="Importe" id="importe" required/>
              </div>
              <div className="form-group">
                  <label >Fecha</label>
-                 <input type="date" id="fecha" class="form-control" required/>
+                 <input type="date" id="fecha" className="form-control" required/>
              </div>
              <div className="form-group">
                  <label >Ubicación</label>
-                 <select required id ="ubicacion" class="form-control" >
+                 <select required id ="ubicacion" className="form-control" >
                    <option value="" >Seleccione Ubicacion</option>
                    <option value="1" >Físico</option>
                    <option value="2" >Copia</option>
@@ -99,7 +93,7 @@ class MyModal extends Component{
              </div>
              <div className="form-group">
                  <label >Tipo</label>
-                 <select required id ="tipo" class="form-control" >
+                 <select required id ="tipo" className="form-control" >
                    <option value="" >Seleccione Tipo</option>
                    <option value="1" >Banco</option>
                    <option value="2" >Manual</option>
@@ -107,7 +101,7 @@ class MyModal extends Component{
              </div>
              <div className="form-group">
                  <label >Verificar</label>
-                 <select required id ="verificar" class="form-control" >
+                 <select required id ="verificar" className="form-control" >
                    <option value="true" >Validado</option>
                    <option value="false" >No Validado</option>
                  </select>
@@ -121,7 +115,6 @@ class MyModal extends Component{
              <button type = "button" className = "btn btn-primary" onClick = {this.handlerGuardar}> Enviar </button>
          </form>
         </div>
-
 
             </Modal>
         );
