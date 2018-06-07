@@ -36,7 +36,7 @@ class ListarComponentes extends Component {
         const lista = this.props.listado;
         if (lista !== null) {
             lista.map((item,key) => {
-                arreglo=arreglo.concat(new this.Obj(item.id_rec,item.observacion,item.id_ubicacion && item.id_ubicacion,item.tipo & item.tipo,item.validado,item.nombre,
+                arreglo=arreglo.concat(new this.Obj(item.id_rec,item.observacion,item.id_ubicacion && item.id_ubicacion,item.id_tipo,item.validado,item.nombre,
                     item.concepto,item.codigo,item.numero,item.importe,item.fecha,item.id_alum));
                 return null;
             });
@@ -46,6 +46,7 @@ class ListarComponentes extends Component {
             }/*, function () {
                 console.log("call"+this.state.data)
             }*/)
+
         }
         //console.log(arreglo);
     }
@@ -113,7 +114,6 @@ class ListarComponentes extends Component {
 
 //recibe el tipo de los archivos
     handleChangeType(tipo,id_rec){
-      console.log(this.state.data);
         this.state.data.map(items=>{
             if(items.id_rec===id_rec){
                 items.tipo=tipo;
