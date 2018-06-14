@@ -32,6 +32,7 @@ class ListarComponentes extends Component {
     componentWillMount(){
         let arreglo = [];
         const lista = this.props.listado;
+       // console.log(lista);
     //   console.log("willRecive=>"+lista);
         if (lista !== null) {
             lista.map((item,key) => {
@@ -123,7 +124,7 @@ class ListarComponentes extends Component {
     }
 //recibe el estado de los checks cada vez que se pulsa sobre ellos
     handleChangeEstado(estado,id){
-        const validado=estado.target.checked;
+        const validado = estado.target.checked;
         this.state.data.map(items=>{
            if(items.id_rec===id){
                 items.validado = validado;
@@ -166,7 +167,7 @@ class ListarComponentes extends Component {
     handleEnviarData() {
         //console.log(this.state.JSON);
         const arreglo=this.verificar();
-        console.log(JSON.stringify(arreglo));
+       // console.log(JSON.stringify(arreglo));
         const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/id';
         this.setState({
            isLoading:true
