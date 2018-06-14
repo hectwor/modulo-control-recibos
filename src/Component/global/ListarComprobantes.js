@@ -194,7 +194,7 @@ class ListarComponentes extends Component {
     eventoNombre(e)
     {
       //console.log(e.target.innerHTML);
-      let nom=e.target.innerHTML
+      let nom=e.target.innerHTML;
       ModalManager.open(<Modal2 text={this.state.dataOrdenada} nombre={nom}/>);
     }
     render() {
