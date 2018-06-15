@@ -45,6 +45,7 @@ class MyModal extends Component{
         });
         // console.log(text["FLORES RAMIREZ MARTHA POLI"]);
         // console.log(text[Object.keys(this.state.data)[this.state.index]]);
+
     }
     ////<tbody>{text[Object.keys(this.state.data)[this.state.index]].map((dynamicData, i) =>
     sumaT(){
@@ -69,9 +70,9 @@ class MyModal extends Component{
             if(ant === arr[i].concepto){
                 suma = suma + parseFloat(arr[i].importe);
             }else{
-                arr.splice(i, 0,[...arrHueco]);
+                arr.splice(i, 0,[arrHueco]);
                 arr[i].importe = suma;
-                arr[i].numero = 'SubSuma';
+                arr[i].numero = 'SUBSUMA';
                 i++;
                 ant = arr[i].concepto;
                 suma = 0;
@@ -79,13 +80,13 @@ class MyModal extends Component{
             }
             i++;
         }
-        arr.splice(i, 0,[...arrHueco]);
+        arr.splice(i, 0,[arrHueco]);
         arr[i].importe = suma;
         arr[i].numero = 'SUBSUMA';
     }
 
     render(){
-        {this.alterarArray()}
+        this.alterarArray();
         const text=this.state.dataAlterar;
 
 
@@ -111,10 +112,10 @@ class MyModal extends Component{
                         </thead>
                         <tbody>{text.map((dynamicData, i) =>
                             <tr key={i}>
-                                <td>{i + 1}</td>
+                                {(dynamicData.numero==="SUBSUMA")?(<td colSpan={1}></td>):( <td>{i+1}</td>)}
                                 <td>{dynamicData.concepto}</td>
-                                <td>{dynamicData.numero}</td>
-                                <td>{dynamicData.importe}</td>
+                                {(dynamicData.numero==="SUBSUMA")?(<td colSpan={1} className="subTotal">{dynamicData.numero}</td>):( <td>{dynamicData.numero}</td>)}
+                                {(dynamicData.numero==="SUBSUMA")?(<td colSpan={1} className="subTotal">{dynamicData.importe}</td>):( <td>{dynamicData.importe}</td>)}
                                 <td>{dynamicData.fecha}</td>
                             </tr>
                         )}
