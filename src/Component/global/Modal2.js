@@ -9,10 +9,11 @@ class MyModal extends Component{
         //  this.handlerGuardar=this.handlerGuardar.bind(this);
         this.texto=React.createRef();
         this.sumaT=this.sumaT.bind(this);
+        this.alterarArray = this.alterarArray.bind(this);
         this.state={
             data:null,
-            index:0,
-            data2:null
+            dataAlterar: null,
+            index:0
         }
     }
     componentWillMount(){
@@ -39,52 +40,56 @@ class MyModal extends Component{
         //console.log(i);
         this.setState({
             data:arre,
-            index:i,
-            data2:arre
+            dataAlterar:[...arre],
+            index:i
         });
         // console.log(text["FLORES RAMIREZ MARTHA POLI"]);
         // console.log(text[Object.keys(this.state.data)[this.state.index]]);
     }
     ////<tbody>{text[Object.keys(this.state.data)[this.state.index]].map((dynamicData, i) =>
     sumaT(){
-      //  console.log(this.state.data);
-       // console.log(this.state.data2);
-        let suma=0;
         let sumaT=0;
-        let arr=this.state.data2;
-      //  let arrT=[];
-        let ant=arr[0].concepto;
-        console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        let arr=this.state.data;
         arr.map((dynamicData, i) =>{
-       //     console.log("------------------------------------");
-       //     console.log("i : ",i);
-            if(ant === dynamicData.concepto){
-                suma = suma + parseFloat(dynamicData.importe);
-            }else{
-
-                // arr[i] = arrT[i].concat(suma);
-                //arr.splice(i, 0,suma);
-        //        console.log("igual : ", suma);
-                suma = 0;
-                suma = suma + parseFloat(dynamicData.importe);
-            }
-
-            sumaT=sumaT+suma;
-            ant = dynamicData.concepto;
-      //      console.log("ant : ",ant);
+            if(dynamicData.numero !== 'SubSuma')
+                sumaT = sumaT + parseFloat(dynamicData.importe);
             return null;
         });
-      //  console.log("u : ", suma);
-        arr = arr.concat(suma);
-      //  console.log(arr);
         return sumaT;
     }
+
+    alterarArray(){
+
+        let suma=0;
+        let arr=this.state.dataAlterar;
+        let arrHueco = [];
+        let ant=arr[0].concepto;
+        let i = 0;
+        while (i < arr.length) {
+            if(ant === arr[i].concepto){
+                suma = suma + parseFloat(arr[i].importe);
+            }else{
+                arr.splice(i, 0,[...arrHueco]);
+                arr[i].importe = suma;
+                arr[i].numero = 'SubSuma';
+                i++;
+                ant = arr[i].concepto;
+                suma = 0;
+                suma = suma + parseFloat(arr[i].importe);
+            }
+            i++;
+        }
+        arr.splice(i, 0,[...arrHueco]);
+        arr[i].importe = suma;
+        arr[i].numero = 'SUBSUMA';
+    }
+
     render(){
+        {this.alterarArray()}
+        const text=this.state.dataAlterar;
 
-        const text=this.state.data;
 
-
-      //   console.log("text: " +text);
+        //  console.log(text);
         return (
             <Modal
                 //onRequestClose={onRequestClose}
@@ -112,7 +117,6 @@ class MyModal extends Component{
                                 <td>{dynamicData.importe}</td>
                                 <td>{dynamicData.fecha}</td>
                             </tr>
-
                         )}
                         <tr >
                             <td colSpan={3} >Total</td>
