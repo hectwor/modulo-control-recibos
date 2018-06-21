@@ -1,6 +1,6 @@
 export default [
-    {"nombre":"Seleccione ubicación"},
-    {"nombre":"Físico"},
-    {"nombre":"Cópia"},
-    {"nombre":"no disponíble"}
+    {"nombre":"Seleccione Ubicación"},
+    {"nombre":"Fisico"},
+    {"nombre":"Copia"},
+    {"nombre":"No Disponíble"}
 ]

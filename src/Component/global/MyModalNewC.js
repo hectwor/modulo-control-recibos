@@ -95,11 +95,11 @@ class MyModal extends Component{
              </div>
              <div className="form-group">
                  <label >Concepto de Pago</label>
-                 <select required id ="concepto" className="form-control" ></select>
+                 <select required id ="concepto" className="form-control"/>
              </div>
              <div className="form-group">
-                 <label >Codigo</label>
-                 <input type="number" className="form-control" placeholder="Codigo" id="codigo" value={codigo} disabled required/>
+                 <label >Código</label>
+                 <input type="number" className="form-control" placeholder="Código" id="codigo" value={codigo} disabled required/>
              </div>
              <div className="form-group">
                  <label>Recibo</label>
@@ -107,7 +107,7 @@ class MyModal extends Component{
              </div>
              <div className="form-group">
                  <label>Importe</label>
-                 <input type="number" className="form-control" placeholder="Importe" id="importe" required/>
+                 <input type="number" min="0" className="form-control" placeholder="Importe" id="importe" required/>
              </div>
              <div className="form-group">
                  <label >Fecha</label>
@@ -116,7 +116,7 @@ class MyModal extends Component{
              <div className="form-group">
                  <label >Ubicación</label>
                  <select required id ="ubicacion" className="form-control" >
-                   <option value="" >Seleccione Ubicacion</option>
+                   <option value="" >Seleccione Ubicación</option>
                    <option value="1" >Físico</option>
                    <option value="2" >Copia</option>
                    <option value="3" >No Disponible</option>

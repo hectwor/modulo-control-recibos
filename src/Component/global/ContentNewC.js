@@ -174,36 +174,17 @@ class Content extends Component{
                                 <span className="input-group-text" id="basic-addon1">Nombre o Apellido</span>
                             </div>
                             <input id="busca" type="text" className="form-control" value={this.state.nombre_apellido} onChange={this.handleInputName} placeholder="nombre o apellido" aria-label="Username" aria-describedby="basic-addon1"
-                                   onKeyPress={this.handleKeyPress}></input>
+                                   onKeyPress={this.handleKeyPress} />
 
                         </div>
-                        {/* <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                            <span className="input-group-text" id="basic-addon1">Concepto de Pago</span>
-                        </div>
-                        <input id="concepto" type="text" className="form-control" value={this.state.concepto} onChange={this.handleInputConcepto} placeholder="ejem:123,123,123" aria-label="Username" aria-describedby="basic-addon1"></input>
-                    </div> */}
 
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
                                 <span className="input-group-text" id="basic-addon1">DNI o Codigo</span>
                             </div>
                             <input id="dni" type="text" className="form-control" value={this.state.dni} onChange={this.handleInputDni} placeholder="codigo" aria-label="Username" aria-describedby="basic-addon1"
-                                   onKeyPress={this.handleKeyPress}></input>
+                                   onKeyPress={this.handleKeyPress} />
                         </div>
-                        {/* <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                            <span className="input-group-text" id="basic-addon1">Periodo</span>
-                        </div>
-                        <input type="date" className="form-control"  onChange={this.handleChange} aria-label="Username" aria-describedby="basic-addon1"></input>
-                        <input type="date" className="form-control"  onChange={this.handleChange2} aria-label="Username" aria-describedby="basic-addon1"></input>
-                    </div>
-                    <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                            <span className="input-group-text" id="basic-addon1">Recibo</span>
-                        </div>
-                        <input id="recibo" type="text" className="form-control" value={this.state.recibo} onChange={this.handleInputRecibo} placeholder="ejem:cod1,cod2,..." aria-label="Username" aria-describedby="basic-addon1"></input>
-                    </div> */}
 
                     </div>
                     <div className="Botones">
