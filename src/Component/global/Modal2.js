@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import {Modal,ModalManager,Effect} from 'react-dynamic-modal';
 import './css/bootstrap.css';
 import './css/Modal2.css';
+
 class MyModal extends Component{
 
     constructor(){
@@ -9,7 +10,7 @@ class MyModal extends Component{
         //  this.handlerGuardar=this.handlerGuardar.bind(this);
         this.texto=React.createRef();
         this.sumaT=this.sumaT.bind(this);
-        this.alterarArray = this.alterarArray.bind(this);
+     //   this.alterarArray = this.alterarArray.bind(this)
         this.state={
             data:null,
             dataAlterar: null,
@@ -84,7 +85,19 @@ class MyModal extends Component{
         arr[i].importe = suma;
         arr[i].numero = 'SUBSUMA';
     }
-
+   /* printDocument() {
+        const input = document.getElementById('divToPrint');
+        html2canvas(input)
+            .then((canvas) => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF();
+                pdf.addImage(imgData, 'JPEG', 0, 0);
+                // pdf.output('dataurlnewwindow');
+                pdf.save("download.pdf");
+            })
+        ;
+    }
+*/
     render(){
         this.alterarArray();
         const text=this.state.dataAlterar;

@@ -8,12 +8,17 @@ html, body
 {
     height: 100%;
 }
-modal-body {
-    width: 80px;
-    height: auto;
-    margin: auto;
+table{
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
-contend{
+tbody {
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.overlay{
     width: 80px;
     height: auto;
     margin: auto;
