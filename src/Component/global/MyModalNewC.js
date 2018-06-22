@@ -60,8 +60,8 @@ class MyModal extends Component{
         data.fecha =document.getElementById("fecha").value;
         data.validado =verif;
         data.tipo =document.getElementById("tipo").value;
-        console.log(data);
         ModalManager.close();
+        console.log(JSON.stringify(data));
         const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/new';
         fetch(url,{
             method: 'POST',
@@ -76,6 +76,8 @@ class MyModal extends Component{
                 if (res.status) { // exito
                     alert('Datos creados exitosamente');
                     ModalManager.close();
+                }else{
+                  alert("FALLÓ OPERACIÓN, ESPERE UN MOMENTO Y VUELVA A INTENTARLO ")
                 }
             });
     }
@@ -104,7 +106,7 @@ class MyModal extends Component{
              </div>
              <div className="form-group">
                  <label>Recibo</label>
-                 <input type="number" className="form-control" placeholder="Recibo" id="recibo" required/>
+                 <input type="number" min="0" className="form-control" placeholder="Recibo" id="recibo" required/>
              </div>
              <div className="form-group">
                  <label>Importe</label>
