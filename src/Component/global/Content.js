@@ -208,8 +208,8 @@ class Content extends Component{
                     <div className="Botones">
                         <div className="Buton-contenedor">
                             <button id="Buscar" onClick={this.handleSearchClick} className="btn btn-outline-success">Buscar </button>
-
                             <Link to="/nueva" className="btn btn-outline-success">Agregar</Link>
+                            <a className="btn btn-outline-success" href="https://siga-fisi.herokuapp.com/dashboard" >Regresar</a>
                         </div>
 
                     </div>
