@@ -143,7 +143,7 @@ class MyModal extends Component{
                  </textarea>
              </div>
              <button type = "button" className = "btn btn-secondary" data-dismiss = "modal" onClick = {ModalManager.close}>Cerrar</button>
-             <button type = "button" className = "btn btn-primary" onClick = {this.handlerGuardar}> Enviar </button>
+             <input type = "submit" className = "btn btn-primary" onClick = {this.handlerGuardar} value="Enviar" />
          </form>
         </div>
         <script>
