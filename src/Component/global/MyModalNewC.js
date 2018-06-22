@@ -60,7 +60,8 @@ class MyModal extends Component{
         data.fecha =document.getElementById("fecha").value;
         data.validado =verif;
         data.tipo =document.getElementById("tipo").value;
-        //ModalManager.close();
+        console.log(data);
+        ModalManager.close();
         const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/new';
         fetch(url,{
             method: 'POST',
@@ -143,7 +144,7 @@ class MyModal extends Component{
                  </textarea>
              </div>
              <button type = "button" className = "btn btn-secondary" data-dismiss = "modal" onClick = {ModalManager.close}>Cerrar</button>
-             <input type = "submit" className = "btn btn-primary" onClick = {this.handlerGuardar} value="Enviar" />
+             <button type = "button" className = "btn btn-primary" onClick = {this.handlerGuardar}>ENVIAR</button>
          </form>
         </div>
         <script>
