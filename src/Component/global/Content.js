@@ -190,10 +190,11 @@ class Content extends Component{
                     </div>
                     <div className="input-group mb-3">
                         <div className="input-group-prepend">
-                            <span className="input-group-text" id="basic-addon1">Periodo</span>
+                            <span className="input-group-text" id="basic-addon1">Desde:</span>
                         </div>
                         <input type="date" className="form-control"  onChange={this.handleChange} aria-label="Username" aria-describedby="basic-addon1"
                                onKeyPress={this.handleKeyPress}/>
+                        <span className="input-group-text" id="basic-addon1">Hasta</span>
                         <input type="date" className="form-control"  onChange={this.handleChange2} aria-label="Username" aria-describedby="basic-addon1"
                                onKeyPress={this.handleKeyPress}/>
                     </div>
