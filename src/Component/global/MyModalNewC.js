@@ -53,7 +53,7 @@ class MyModal extends Component{
         data.id_alum=this.props.id;
         data.id_concepto =document.getElementById("concepto").value;
         data.id_ubicacion =document.getElementById("ubicacion").value;
-        data.cod_alumno =document.getElementById("codigo").value;
+        data.codigo =document.getElementById("codigo").value;
         data.numero =document.getElementById("recibo").value;
         data.importe =document.getElementById("importe").value;
         data.observacion =document.getElementById("obs").value;
