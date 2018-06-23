@@ -143,7 +143,7 @@ class MyModal extends Component{
 
                     <div className="modal-footer">
                         <button type = "button" className = "btn btn-secondary" data-dismiss = "modal" onClick = {ModalManager.close}>Cerrar</button>
-                        <button type = "button" className = "btn btn-primary" onClick = {this.handlerGuardar} >PDF</button>
+                        <button type = "button" className = "btn btn-primary" onClick = {window.print} >Imprimir</button>
                     </div>
                 </div>
 
