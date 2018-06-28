@@ -27,7 +27,7 @@ class MyModal extends Component{
               if (res.status) { // exito
                   console.log(res);
                   data=res;
-                  console.log(data);
+                  //console.log(data);
                   // Llenar select de conceptos
                   var x = document.getElementById("concepto");
                   for (var i = 0; i < data["data"].length; i++) {
@@ -36,6 +36,8 @@ class MyModal extends Component{
                     miOption.setAttribute("value",data["data"][i]["id_concepto"]);
                     x.add(miOption);
                   }
+              }else{
+                alert("Fallo al cargar datos, Intentelo mas tarde")
               }
           });
     }
@@ -76,6 +78,7 @@ class MyModal extends Component{
                 if (res.status) { // exito
                     alert('Datos creados exitosamente');
                     ModalManager.close();
+                    alert("actualizar aqui");
                 }else{
                   alert("FALLÓ OPERACIÓN, ESPERE UN MOMENTO Y VUELVA A INTENTARLO ")
                 }

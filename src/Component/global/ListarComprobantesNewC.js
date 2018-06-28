@@ -3,7 +3,7 @@ import {ModalManager} from 'react-dynamic-modal';
 import MyModal from './MyModal';
 import Combo from './ComboNewC';
 import Combodos from './CombodosNewC';
-import Check from './Check';
+import Check from './CheckNewC';
 import './css/DatosCSS.css';
 import './css/bootstrap.css';
 import './css/ListarComprobanteNewC.css';
