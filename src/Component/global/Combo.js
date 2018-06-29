@@ -5,10 +5,16 @@ import './css/bootstrap.css';
 
 import Datos from './Datos/Items';
 class Combo extends Component{
-    constructor(){
-        super();
+    constructor(...props){
+        super(...props);
         this.handlerGuardar=this.handlerGuardar.bind(this);
     }
+    //id_tipo
+    //descripcion
+
+
+
+
     handlerGuardar(e){
         //let data=this.texto.current.value;
         let num=0;
@@ -35,9 +41,10 @@ class Combo extends Component{
     render(){
         const {items}=this.props;
         return(
-                <select className="custom-select" onChange={this.handlerGuardar} id="inputGroupSelect01">
-                    {items && items.map((item,key)=><option key={key} id={key} selected={key===this.props.ubic?(true):(false)}>{item.nombre}</option>)}
-                </select>
+          <select className="custom-select" onChange={this.handlerGuardar} id="inputGroupSelect01">
+                              {items && items.map((item,key)=><option key={key} id={key} selected={key===this.props.ubic?(true):(false)}>{item.descripcion}</option>)}
+                          </select>
+
         );
     }
 

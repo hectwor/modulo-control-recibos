@@ -10,37 +10,7 @@ class MyModal extends Component{
         this.handlerGuardar=this.handlerGuardar.bind(this);
         // this.texto=React.createRef();
     }
-    componentWillMount(){
-      let data;
-      ///////////
-      const url= 'https://api-modulocontrol.herokuapp.com/conceptos';
-      fetch(url,{
-          method: 'GET',
-          headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-            }
-          //body: JSON.stringify(data)
-                  })
-          .then(res => res.json())
-          .then(res => {
-              if (res.status) { // exito
-                  console.log(res);
-                  data=res;
-                  //console.log(data);
-                  // Llenar select de conceptos
-                  var x = document.getElementById("concepto");
-                  for (var i = 0; i < data["data"].length; i++) {
-                    var miOption=document.createElement("option");
-                    miOption.text = data["data"][i]["concepto"];
-                    miOption.setAttribute("value",data["data"][i]["id_concepto"]);
-                    x.add(miOption);
-                  }
-              }else{
-                alert("Fallo al cargar datos, Intentelo mas tarde")
-              }
-          });
-    }
+  
 
 
 

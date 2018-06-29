@@ -8,8 +8,8 @@ import './css/DatosCSS.css';
 import './css/bootstrap.css';
 import './css/ListarComprobanteNewC.css';
 import Modal2 from './MyModalNewC';
-import Datos from './Datos/Items';
-import Datos2 from './Datos/Tipo';
+//import Datos from './Datos/Items';
+//import Datos2 from './Datos/Tipo';
 
 class ListarComponentes extends Component {
     constructor(...props){
@@ -26,6 +26,8 @@ class ListarComponentes extends Component {
         this.state={
             data:null,
             JSON:[],
+            ubicDato:[],
+            tipoDato:[],
             isLoading:false,
             isNew:false
         }
@@ -49,6 +51,52 @@ class ListarComponentes extends Component {
 
         }
         //console.log(arreglo);
+        const url= 'https://api-modulocontrol.herokuapp.com/ubicaciones';
+        fetch(url,{
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+              }
+                    })
+            .then(res => res.json())
+            .then(res => {
+                if (res.status) { // exito
+                    let dataTipo=res["data"];
+                    this.setState({
+                       ubicDato:dataTipo
+                    });
+                    //console.log(res["data"]);
+
+                  //  console.log(this.state.dataTipo);
+                }else{
+                  alert("Fallo al cargar datos, Intentelo mas tarde")
+                }
+            });
+
+            const url2= 'https://api-modulocontrol.herokuapp.com/tipos';
+            fetch(url2,{
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                  }
+                        })
+                .then(res => res.json())
+                .then(res => {
+                    if (res.status) { // exito
+                        let dataTipo=res["data"];
+                        this.setState({
+                           tipoDato:dataTipo
+                        });
+                        //console.log(res["data"]);
+
+                      //  console.log(this.state.dataTipo);
+                    }else{
+                      alert("Fallo al cargar datos, Intentelo mas tarde")
+                    }
+                });
+
     }
 
     // crear un objeto para enviar al server
@@ -255,10 +303,10 @@ class ListarComponentes extends Component {
                                 <td>{dynamicData.numero}</td>
                                 <td>{dynamicData.importe}</td>
                                 <td>{dynamicData.fecha}</td>
-                                <td><Combo items={Datos} val={this.handleChangeUbic} ubic={dynamicData.ubic}
+                                <td><Combo items={this.state.ubicDato} val={this.handleChangeUbic} ubic={dynamicData.ubic}
                                            id_rec={dynamicData.id_rec}/></td>
 
-                                <td><Combodos items={Datos2} val={this.handleChangeType} tipo={dynamicData.tipo}
+                                <td><Combodos items={this.state.tipoDato} val={this.handleChangeType} tipo={dynamicData.tipo}
                                               id_rec={dynamicData.id_rec}/></td>
                                 <td>
                                     <Check validado={dynamicData.validado} id={dynamicData.id_rec}

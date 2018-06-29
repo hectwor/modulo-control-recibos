@@ -36,7 +36,7 @@ class Combo extends Component{
         const {items}=this.props;
         return(
                 <select className="custom-select" onChange={this.handlerGuardar} id="inputGroupSelect01" disabled>
-                    {items && items.map((item,key)=><option key={key} id={key} selected={key===this.props.ubic?(true):(false)}>{item.nombre} </option>)}
+                    {items && items.map((item,key)=><option key={key} id={key} selected={key===this.props.ubic?(true):(false)}>{item.descripcion} </option>)}
                 </select>
         );
     }

@@ -6,7 +6,7 @@ import Combo from './Combo';
 import Check from './Check';
 import './css/DatosCSS.css';
 import './css/bootstrap.css';
-import Datos from './Datos/Items';
+//import Datos from './Datos/Items';
 
 
 class ListarComponentes extends Component {
@@ -25,27 +25,25 @@ class ListarComponentes extends Component {
        this.state={
            data:null,
            dataOrdenada: null,
+           ubicDato:[],
            JSON:[],
            isLoading:false
        }
     }
     componentWillMount(){
+
+
         let arreglo = [];
         const lista = this.props.listado;
-       // console.log(lista);
-    //   console.log("willRecive=>"+lista);
         if (lista !== null) {
             lista.map((item,key) => {
                 arreglo=arreglo.concat(new this.Obj(item.id_rec,item.observacion,item.id_ubicacion && item.id_ubicacion,item.validado,item.nombre,
                     item.concepto,item.codigo,item.numero,item.importe,item.fecha));
                 return null;
             });
-           // console.log(arreglo);
             this.setState({
                 data: arreglo
-            }/*, function () {
-                console.log("call"+this.state.data)
-            }*/);
+            });
             const listadoOrdenado = arreglo.sort(function (a, b) {
                                                   if (a.nombre > b.nombre) {
                                                     return 1;
@@ -63,6 +61,29 @@ class ListarComponentes extends Component {
              dataOrdenada:nuevaLista
           });
         }
+        const url= 'https://api-modulocontrol.herokuapp.com/ubicaciones';
+        fetch(url,{
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+              }
+                    })
+            .then(res => res.json())
+            .then(res => {
+                if (res.status) { // exito
+                    let dataTipo=res["data"];
+                    this.setState({
+                       ubicDato:dataTipo
+                    });
+                    console.log(this.state.tipoDato);
+                    //console.log(res["data"]);
+
+                  //  console.log(this.state.dataTipo);
+                }else{
+                  alert("Fallo al cargar datos, Intentelo mas tarde")
+                }
+            });
     }
 
     // crear un objeto para enviar al server
@@ -191,6 +212,7 @@ class ListarComponentes extends Component {
                     alert('Datos cargados exitosamente');
                 }
             })
+            console.log(JSON.stringify(arreglo));
         //https://github.com/calambrenet/react-table/blob/master/src/react-table.jsx
     }
     eventoNombre(e)
@@ -229,7 +251,7 @@ class ListarComponentes extends Component {
                                 <td>{dynamicData.numero}</td>
                                 <td>{dynamicData.importe}</td>
                                 <td>{dynamicData.fecha}</td>
-                                <td><Combo items={Datos} val={this.handleChangeUbic} ubic={dynamicData.ubic}
+                                <td><Combo items={this.state.ubicDato} val={this.handleChangeUbic} ubic={dynamicData.ubic}
                                            id_rec={dynamicData.id_rec}/></td>
 
                                 <td>
