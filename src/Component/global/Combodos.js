@@ -23,8 +23,7 @@ class Combo extends Component{
         //     default:
         //         num = "";
         // }
-        var x = document.getElementById("inputGroupSelect01").value;
-        this.props.val(x,this.props.id_rec);
+        this.props.val(e.target.value,this.props.id_rec);
     }
 
 
