@@ -18,26 +18,47 @@ class MyModal extends Component{
         }
     }
     componentWillMount(){
-        const {text,nombre} = this.props;
+        const {text,nombre,codigo} = this.props;
+        let arre = [];
+      //  console.log(text);
         let i=0;
-        Object.keys(text).map((data,index)=>{
-            if(data===nombre){
-                i=index;
-            }
-            return null;
-        });
-        //console.log(text[Object.keys(text)[0]]);
-        let arre= text[Object.keys(text)[i]].sort( (a, b)=> {
-            if (a.concepto > b.concepto) {
-                return 1;
-            }
-            if (a.concepto < b.concepto) {
-                return -1;
-            }
-            //iguales
-            return 0;
-        });
 
+        //console.log(text[Object.keys(text)[0]]);
+        if(codigo!=="0"){
+            Object.keys(text).map((data,index)=>{
+                if(data===codigo){
+                    i=index;
+                }
+                return null;
+            });
+            arre= text[Object.keys(text)[i]].sort( (a, b)=> {
+                if (a.concepto > b.concepto) {
+                    return 1;
+                }
+                if (a.concepto < b.concepto) {
+                    return -1;
+                }
+                //iguales
+                return 0;
+            });
+        }else{
+            Object.keys(text).map((data,index)=>{
+                if(data===nombre){
+                    i=index;
+                }
+                return null;
+            });
+            arre = text[Object.keys(text)[i]].sort( (a, b)=> {
+                if (a.nombre > b.nombre) {
+                    return 1;
+                }
+                if (a.nombre < b.nombre) {
+                    return -1;
+                }
+                //iguales
+                return 0;
+            });
+        }
         //console.log(i);
         this.setState({
             data:arre,
@@ -113,34 +134,34 @@ class MyModal extends Component{
                     <div className="form-group">
                         <label htmlFor="message-text" className="col-form-label">Nombre: {text[0].nombre}</label>
                     </div>
-                    <table className="tabla">
-                        <thead>
-                        <tr className="tabla-cabecera">
-                            <th>Nro</th>
-                            <th>Concepto</th>
-                            <th>Recibo</th>
-                            <th>Importe</th>
-                            <th>Fecha</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>{text.map((dynamicData, i) =>
-                            <tr key={i}>
-                                {(dynamicData.numero==="SUBSUMA")?(<td colSpan={1}></td>):( <td>{i+1}</td>)}
-                                <td>{dynamicData.concepto}</td>
-                                {(dynamicData.numero==="SUBSUMA")?(<td colSpan={1} className="subTotal">{dynamicData.numero}</td>):( <td>{dynamicData.numero}</td>)}
-                                {(dynamicData.numero==="SUBSUMA")?(<td colSpan={1} className="subTotal">{dynamicData.importe}</td>):( <td>{dynamicData.importe}</td>)}
-                                <td>{dynamicData.fecha}</td>
+                    <div className="cuerpo">
+                        <table className="tabla">
+                            <thead>
+                            <tr className="tabla-cabecera">
+                                <th>Nro</th>
+                                <th>Concepto</th>
+                                <th>Recibo</th>
+                                <th>Importe</th>
+                                <th>Fecha</th>
+                                <th></th>
                             </tr>
-                        )}
-                        <tr >
-                            <td colSpan={3} >Total</td>
-                            <td className="total">{this.sumaT()}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-
+                            </thead>
+                            <tbody>{text.map((dynamicData, i) =>
+                                <tr key={i}>
+                                    {(dynamicData.numero==="SUBSUMA")?(<td colSpan={1}></td>):( <td>{i+1}</td>)}
+                                    <td>{dynamicData.concepto}</td>
+                                    {(dynamicData.numero==="SUBSUMA")?(<td colSpan={1} className="subTotal">{dynamicData.numero}</td>):( <td>{dynamicData.numero}</td>)}
+                                    {(dynamicData.numero==="SUBSUMA")?(<td colSpan={1} className="subTotal">{dynamicData.importe}</td>):( <td>{dynamicData.importe}</td>)}
+                                    <td>{dynamicData.fecha}</td>
+                                </tr>
+                            )}
+                            <tr >
+                                <td colSpan={3} >Total</td>
+                                <td className="total">{this.sumaT()}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <div className="modal-footer">
                         <button type = "button" className = "btn btn-secondary" data-dismiss = "modal" onClick = {ModalManager.close}>Cerrar</button>
                         <button type = "button" className = "btn btn-primary" onClick = {window.print} >Imprimir</button>

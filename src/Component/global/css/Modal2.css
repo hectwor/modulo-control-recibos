@@ -23,3 +23,7 @@ tbody {
     height: auto;
     margin: auto;
 }
+cuerpo{
+    height: 30%;
+    overflow: auto;
+}

@@ -36,32 +36,31 @@ class ListarComponentes extends Component {
     //   console.log("willRecive=>"+lista);
         if (lista !== null) {
             lista.map((item,key) => {
-                arreglo=arreglo.concat(new this.Obj(item.id_rec,item.observacion,item.id_ubicacion && item.id_ubicacion,item.validado,item.nombre,
+                arreglo = arreglo.concat(new this.Obj(item.id_rec,item.observacion,item.id_ubicacion && item.id_ubicacion,item.validado,item.nombre,
                     item.concepto,item.codigo,item.numero,item.importe,item.fecha));
                 return null;
             });
+            const listadoOrdenado = arreglo.sort(function (a, b) {
+                if (a.nombre > b.nombre) {
+                    return 1;
+                }
+                if (a.nombre < b.nombre) {
+                    return -1;
+                }
+                //iguales
+                return 0;
+            });
            // console.log(arreglo);
             this.setState({
-                data: arreglo
+                data: listadoOrdenado
             }/*, function () {
                 console.log("call"+this.state.data)
             }*/);
-            const listadoOrdenado = arreglo.sort(function (a, b) {
-                                                  if (a.nombre > b.nombre) {
-                                                    return 1;
-                                                  }
-                                                  if (a.nombre < b.nombre) {
-                                                    return -1;
-                                                  }
-                                                  //iguales
-                                                  return 0;
-                                                });
 
-        const nuevaLista = this.groupBy(listadoOrdenado,'nombre');
-         // console.log( nuevaLista );
-          this.setState({
-             dataOrdenada:nuevaLista
-          });
+          //console.log( listadoOrdenado );
+          /*this.setState({
+             dataOrdenada:listadoOrdenado
+          });*/
         }
     }
 
@@ -91,7 +90,7 @@ class ListarComponentes extends Component {
         return arreglo2;
     }
 
-//crea un objeto para pasar al hijo
+    //crea un objeto para pasar al hijo
     Obj(id_rec,obs,ubic,validado,nombre,concepto,codigo,numero,importe,fecha){
         this.id_rec=id_rec;
         this.obs=obs;
@@ -113,7 +112,7 @@ class ListarComponentes extends Component {
         }
         else this.fecha=fecha;
     }
-//recibe las ubicaciones de los archivos
+    //recibe las ubicaciones de los archivos
     handleChangeUbic(ubic,id_rec){
         this.state.data.map(items=>{
             if(items.id_rec===id_rec){
@@ -122,7 +121,7 @@ class ListarComponentes extends Component {
             return null;
         });
     }
-//recibe el estado de los checks cada vez que se pulsa sobre ellos
+    //recibe el estado de los checks cada vez que se pulsa sobre ellos
     handleChangeEstado(estado,id){
         const validado = estado.target.checked;
         this.state.data.map(items=>{
@@ -164,7 +163,7 @@ class ListarComponentes extends Component {
         ModalManager.open(<MyModal text={text} id_rec={id_re} change={this.handleChangeObs}/>);
 
     }
-// envia un JSON al server
+    // envia un JSON al server
     handleEnviarData() {
         //console.log(this.state.JSON);
         const arreglo=this.verificar();
@@ -195,9 +194,41 @@ class ListarComponentes extends Component {
     }
     eventoNombre(e)
     {
-      //console.log(e.target.innerHTML);
-      let nom=e.target.innerHTML;
-      ModalManager.open(<Modal2 text={this.state.dataOrdenada} nombre={nom}/>);
+
+      let nom = e.target.innerHTML;
+      let id= e.target.id;
+      var groupList=[];
+      var listadoOrdenado;
+        //console.log(e.target.innerHTML);
+        if(id===nom){
+            listadoOrdenado = this.state.data.sort(function (a, b) {
+                if (a.nombre > b.nombre) {
+                    return 1;
+                }
+                if (a.nombre < b.nombre) {
+                    return -1;
+                }
+                //iguales
+                return 0;
+            });
+           // console.log(listadoOrdenado);
+            groupList = this.groupBy(listadoOrdenado,"nombre");
+        }else{
+            listadoOrdenado = this.state.data.sort(function (a, b) {
+                if (a.codigo > b.codigo) {
+                    return 1;
+                }
+                if (a.codigo < b.codigo) {
+                    return -1;
+                }
+                //iguales
+                return 0;
+            });
+            console.log(listadoOrdenado);
+            groupList = this.groupBy(listadoOrdenado,"codigo");
+        }
+       // console.log(groupList);
+      ModalManager.open(<Modal2 text={groupList} nombre={nom} codigo={id}/>);
     }
     render() {
         const listado = this.state.data;
@@ -223,7 +254,7 @@ class ListarComponentes extends Component {
                         <tbody>{listado.map((dynamicData, i) =>
                             <tr key={i}>
                                 <td>{i + 1}</td>
-                                <td onClick={(e)=>this.eventoNombre(e)} title="click para ver detalles" className="detalles">{dynamicData.nombre}</td>
+                                <td onClick={(e)=>this.eventoNombre(e)} title="click para ver detalles" className="detalles" id={(dynamicData.codigo==="0")?(dynamicData.nombre):(dynamicData.codigo)}>{dynamicData.nombre}</td>
                                 <td>{dynamicData.concepto}</td>
                                 <td>{dynamicData.codigo}</td>
                                 <td>{dynamicData.numero}</td>
