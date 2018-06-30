@@ -44,7 +44,7 @@ class Combo extends Component{
 
     render(){
         const {items}=this.props;
-        console.log(this.props.ubic);
+      //  console.log(this.props.ubic);
         return(
           <select className="custom-select" onChange={this.handlerGuardar} id="inputGroupSelect01" >
                               {items && items.map((item,key)=><option key={key} id={key} value={item.id_ubicacion} selected={key===this.props.ubic?(true):(false)}>{item.descripcion}</option>)}

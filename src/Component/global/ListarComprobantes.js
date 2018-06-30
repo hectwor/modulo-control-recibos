@@ -81,7 +81,7 @@ class ListarComponentes extends Component {
                     this.setState({
                        ubicDato:dataTipo
                     });
-                    console.log(this.state.tipoDato);
+                  //  console.log(this.state.tipoDato);
                     //console.log(res["data"]);
 
                   //  console.log(this.state.dataTipo);
@@ -252,7 +252,7 @@ class ListarComponentes extends Component {
                 //iguales
                 return 0;
             });
-            console.log(listadoOrdenado);
+          //  console.log(listadoOrdenado);
             groupList = this.groupBy(listadoOrdenado,"codigo");
         }
        // console.log(groupList);
