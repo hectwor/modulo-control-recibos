@@ -258,7 +258,8 @@ class ListarComponentes extends Component {
        // console.log(groupList);
       ModalManager.open(<Modal2 text={groupList} nombre={nom} codigo={id}/>);
     }
-    render() {
+    render() {-+
+
         const listado = this.state.data;
         //console.log("render=>"+listado);
 
