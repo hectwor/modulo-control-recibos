@@ -51,7 +51,7 @@ class ListarComponentes extends Component {
 
         }
         //console.log(arreglo);
-        const url= 'https://api-modulocontrol.herokuapp.com/ubicaciones';
+        const url= 'http://18.219.10.95:7896/ubicaciones';
         fetch(url,{
             method: 'GET',
             headers: {
@@ -74,7 +74,7 @@ class ListarComponentes extends Component {
                 }
             });
 
-            const url2= 'https://api-modulocontrol.herokuapp.com/tipos';
+            const url2= 'http://18.219.10.95:7896/tipos';
             fetch(url2,{
                 method: 'GET',
                 headers: {
@@ -213,7 +213,7 @@ class ListarComponentes extends Component {
         //console.log(this.state.JSON);
         //console.log(JSON.stringify(arreglo));
         // console.log(JSON.stringify(arreglo));
-        const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/new';
+        const url= 'http://18.219.10.95:7896/recaudaciones/new';
         this.setState({
             isLoading:true
         });
