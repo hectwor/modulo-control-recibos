@@ -106,7 +106,7 @@ class Content extends Component{
     //buscar
    handleSearchClick(e) {
 
-        let url = 'https://api-modulocontrol.herokuapp.com/recaudaciones/';
+        let url = 'http://18.219.10.95:7896/recaudaciones/';
                   url = url.concat('detallada/');
        if(this.state.nombre_apellido === "" && this.state.concepto === ""&& this.state.recibo === "" &&
            this.state.dates2 === "" && this.state.dates === "" && this.state.dni === ""){

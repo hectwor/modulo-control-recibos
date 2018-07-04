@@ -13,7 +13,7 @@ class MyModal extends Component{
       componentWillMount(){
         let data;
         ///////////
-        const url= 'https://api-modulocontrol.herokuapp.com/conceptos';
+        const url= 'http://18.219.10.95:7896/conceptos';
         fetch(url,{
             method: 'GET',
             headers: {
@@ -60,7 +60,7 @@ class MyModal extends Component{
         data.tipo =document.getElementById("tipo").value;
         ModalManager.close();
         console.log(JSON.stringify(data));
-        const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/new';
+        const url= 'http://18.219.10.95:7896/recaudaciones/new';
         fetch(url,{
             method: 'POST',
             headers: {
