@@ -8,7 +8,8 @@ import './css/DatosCSS.css';
 import './css/bootstrap.css';
 //import Datos from './Datos/Items';
 
-
+//https://reactstrap.github.io/
+//https://reactstrap.github.io/components/modals/
 class ListarComponentes extends Component {
     constructor(...props){
         super(...props);
