@@ -60,7 +60,7 @@ class MyModal extends Component{
         data.tipo =document.getElementById("tipo").value;
         ModalManager.close();
         console.log(JSON.stringify(data));
-        const url= 'http://18.219.10.95:7896/recaudaciones/new';
+        const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/new';
         fetch(url,{
             method: 'POST',
             headers: {

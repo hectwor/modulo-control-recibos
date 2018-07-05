@@ -198,7 +198,7 @@ class ListarComponentes extends Component {
         //console.log(this.state.JSON);
         const arreglo=this.verificar();
        // console.log(JSON.stringify(arreglo));
-        const url= 'http://18.219.10.95:7896/recaudaciones/id';
+        const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/id';
         this.setState({
            isLoading:true
         });
