@@ -13,7 +13,7 @@ class MyModal extends Component{
       componentWillMount(){
         let data;
         ///////////
-        const url= 'http://18.219.10.95:7896/conceptos';
+        const url= 'https://api-modulocontrol.herokuapp.com/conceptos';
         fetch(url,{
             method: 'GET',
             headers: {

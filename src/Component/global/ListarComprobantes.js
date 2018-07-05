@@ -66,7 +66,7 @@ class ListarComponentes extends Component {
              dataOrdenada:listadoOrdenado
           });*/
         }
-        const url= 'http://18.219.10.95:7896/ubicaciones';
+        const url= 'https://api-modulocontrol.herokuapp.com/ubicaciones';
         fetch(url,{
             method: 'GET',
             headers: {
