@@ -25,7 +25,7 @@ class MyModal extends Component{
             .then(res => res.json())
             .then(res => {
                 if (res.status) { // exito
-                    console.log(res);
+                  //  console.log(res);
                     data=res;
                     //console.log(data);
                     // Llenar select de conceptos
