@@ -3,6 +3,7 @@ import {ModalManager} from 'react-dynamic-modal';
 import MyModal from './MyModal';
 import Combo from './ComboNewC';
 import Combodos from './CombodosNewC';
+import URL from './API/API';
 import Check from './CheckNewC';
 import './css/DatosCSS.css';
 import './css/bootstrap.css';
@@ -52,7 +53,8 @@ class ListarComponentes extends Component {
 
         }
         //console.log(arreglo);
-        const url= 'https://api-modulocontrol.herokuapp.com/ubicaciones';
+        //const url= 'https://api-modulocontrol.herokuapp.com/ubicaciones';
+        const url = URL.url.concat('ubicaciones');
         fetch(url,{
             method: 'GET',
             headers: {
@@ -73,8 +75,8 @@ class ListarComponentes extends Component {
                   alert("Fallo al cargar datos, Intentelo mas tarde")
                 }
             });
-
-            const url2= 'https://api-modulocontrol.herokuapp.com/tipos';
+            const url2= URL.url.concat('tipos');
+          //  const url2= 'https://api-modulocontrol.herokuapp.com/tipos';
             fetch(url2,{
                 method: 'GET',
                 headers: {
@@ -215,7 +217,8 @@ class ListarComponentes extends Component {
         //console.log(this.state.JSON);
         //console.log(JSON.stringify(arreglo));
         // console.log(JSON.stringify(arreglo));
-        const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/new';
+        const url =  URL.url.concat('recaudaciones/new');
+       // const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/new';
         this.setState({
             isLoading:true
         });

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import MyModal from './MyModal';
 import Modal2 from './Modal2';
 import Combo from './Combo';
+import URL from './API/API';
 import Check from './Check';
 import './css/DatosCSS.css';
 import './css/bootstrap.css';
@@ -66,7 +67,8 @@ class ListarComponentes extends Component {
              dataOrdenada:listadoOrdenado
           });*/
         }
-        const url= 'https://api-modulocontrol.herokuapp.com/ubicaciones';
+        //const url= 'https://api-modulocontrol.herokuapp.com/ubicaciones';
+        const url = URL.url.concat('ubicaciones');
         fetch(url,{
             method: 'GET',
             headers: {
@@ -198,7 +200,8 @@ class ListarComponentes extends Component {
         //console.log(this.state.JSON);
         const arreglo=this.verificar();
        // console.log(JSON.stringify(arreglo));
-        const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/id';
+       // const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/id';
+        const url = URL.url.concat('recaudaciones/id');
         this.setState({
            isLoading:true
         });

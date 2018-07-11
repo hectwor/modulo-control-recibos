@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {Modal,ModalManager,Effect} from 'react-dynamic-modal';
 import './css/DatosCSS.css';
+import  URL from './API/API';
 import './css/bootstrap.css';
 import './css/NewC.css';
 import './css/ListarComprobanteNewC.css';
@@ -12,8 +13,8 @@ class MyModal extends Component{
     }
       componentWillMount(){
         let data;
-        ///////////
-        const url= 'https://api-modulocontrol.herokuapp.com/conceptos';
+        const url = URL.url.concat('conceptos');
+       // const url= 'https://api-modulocontrol.herokuapp.com/conceptos';
         fetch(url,{
             method: 'GET',
             headers: {
@@ -60,7 +61,8 @@ class MyModal extends Component{
         data.tipo =document.getElementById("tipo").value;
         ModalManager.close();
         console.log(JSON.stringify(data));
-        const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/new';
+        const url = URL.url.concat('recaudaciones/new');
+        //const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/new';
         fetch(url,{
             method: 'POST',
             headers: {
