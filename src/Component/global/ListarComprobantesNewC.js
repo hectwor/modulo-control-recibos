@@ -3,11 +3,13 @@ import {ModalManager} from 'react-dynamic-modal';
 import MyModal from './MyModal';
 import Combo from './ComboNewC';
 import Combodos from './CombodosNewC';
+import URL from './API/API';
 import Check from './CheckNewC';
 import './css/DatosCSS.css';
 import './css/bootstrap.css';
 import './css/ListarComprobanteNewC.css';
 import Modal2 from './MyModalNewC';
+import ReactDOM from "react-dom";
 //import Datos from './Datos/Items';
 //import Datos2 from './Datos/Tipo';
 
@@ -51,7 +53,8 @@ class ListarComponentes extends Component {
 
         }
         //console.log(arreglo);
-        const url= 'https://api-modulocontrol.herokuapp.com/ubicaciones';
+        //const url= 'https://api-modulocontrol.herokuapp.com/ubicaciones';
+        const url = URL.url.concat('ubicaciones');
         fetch(url,{
             method: 'GET',
             headers: {
@@ -66,15 +69,14 @@ class ListarComponentes extends Component {
                     this.setState({
                        ubicDato:dataTipo
                     });
-                    //console.log(res["data"]);
 
-                  //  console.log(this.state.dataTipo);
+                   // console.log(dataTipo);
                 }else{
                   alert("Fallo al cargar datos, Intentelo mas tarde")
                 }
             });
-
-            const url2= 'https://api-modulocontrol.herokuapp.com/tipos';
+            const url2= URL.url.concat('tipos');
+          //  const url2= 'https://api-modulocontrol.herokuapp.com/tipos';
             fetch(url2,{
                 method: 'GET',
                 headers: {
@@ -89,7 +91,7 @@ class ListarComponentes extends Component {
                         this.setState({
                            tipoDato:dataTipo
                         });
-                        //console.log(res["data"]);
+                       // console.log(res["data"]);
 
                       //  console.log(this.state.dataTipo);
                     }else{
@@ -127,7 +129,7 @@ class ListarComponentes extends Component {
                 item.obs,item.flag,item.fecha,item.validado,item.tipo))
             return null;
         });
-        console.log(arreglo2);
+      //  console.log(arreglo2);
         this.setState({
             JSON:arreglo2
         });
@@ -203,7 +205,9 @@ class ListarComponentes extends Component {
         //https://github.com/xue2han/react-dynamic-modal
         let text=e.target.id;
         let id_re=e.target.name;
-        ModalManager.open(<MyModal text={text} id_rec={id_re} change={this.handleChangeObs}/>);
+        let component = <MyModal text={text} id_rec={id_re} change={this.handleChangeObs} estado={true}/>;
+        let  node = document.createElement('div');
+        ReactDOM.render(component,node);
     }
 
 // envia un JSON al server
@@ -213,7 +217,8 @@ class ListarComponentes extends Component {
         //console.log(this.state.JSON);
         //console.log(JSON.stringify(arreglo));
         // console.log(JSON.stringify(arreglo));
-        const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/new';
+        const url =  URL.url.concat('recaudaciones/new');
+       // const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/new';
         this.setState({
             isLoading:true
         });
@@ -235,14 +240,13 @@ class ListarComponentes extends Component {
                     alert('Datos cargados exitosamente');
                 }
             })
-        console.log(arreglo);
+       // console.log(arreglo);
         //https://github.com/calambrenet/react-table/blob/master/src/react-table.jsx
     }
 
 
         eventoNombre(e,f,c)
         {
-
           let id=e;
           let nom=f;
           let cod = c;
@@ -252,7 +256,7 @@ class ListarComponentes extends Component {
 
     render() {
         const listado = this.state.data;
-        //console.log("render=>"+listado);
+       // console.log(listado);
         if (listado == null) {
             return (
                 <div></div>

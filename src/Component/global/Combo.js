@@ -15,28 +15,8 @@ class Combo extends Component{
 
 
     handlerGuardar(e){
-        //let data=this.texto.current.value;
-        // let num=0;
-        // switch (e.target.value) {
-        //     case Datos[1].nombre:num=1;
-        //         break;
-        //     case Datos[2].nombre:num=2;
-        //         break;
-        //     case Datos[3].nombre:num=3;
-        //         break;
-        //     case "Seleccione ubicación":num="";
-        //         break;
-        //     default:
-        //         num = "";
-        // }
-        // 
-        // var x = document.getElementById("inputGroupSelect01").value;
-        // console.log(e.target.value);
-        // console.log(x);
-        // this.props.val(x,this.props.id_rec);
         this.props.val(e.target.value,this.props.id_rec);
     }
-
 
 
 
@@ -44,12 +24,17 @@ class Combo extends Component{
 
     render(){
         const {items}=this.props;
-      //  console.log(this.props.ubic);
         return(
           <select className="custom-select" onChange={this.handlerGuardar} id="inputGroupSelect01" >
-                              {items && items.map((item,key)=><option key={key} id={key} value={item.id_ubicacion} selected={key===this.props.ubic?(true):(false)}>{item.descripcion}</option>)}
-                          </select>
-
+            {items && items.sort((a,b)=>{
+                if(a.id_ubicacion>b.id_ubicacion){
+                    return 1;
+                }else if(a.id_ubicacion<b.id_ubicacion){
+                    return -1;
+                }
+                return 0;
+            }).map((item,key)=><option key={key} id={key} value={item.id_ubicacion} selected={key===this.props.ubic?(true):(false)}>{item.descripcion}</option>)}
+          </select>
         );
     }
 

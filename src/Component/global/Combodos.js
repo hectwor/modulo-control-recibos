@@ -3,7 +3,7 @@ import React,{Component} from 'react';
 import  './css/Combo.css';
 import './css/bootstrap.css';
 
-import Datos from './Datos/Tipo';
+//import Datos from './Datos/Tipo';
 class Combo extends Component{
     constructor(){
         super();

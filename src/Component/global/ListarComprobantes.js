@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import {ModalManager} from 'react-dynamic-modal';
+import ReactDOM from 'react-dom';
 import MyModal from './MyModal';
 import Modal2 from './Modal2';
 import Combo from './Combo';
+import URL from './API/API';
 import Check from './Check';
 import './css/DatosCSS.css';
 import './css/bootstrap.css';
@@ -66,7 +67,8 @@ class ListarComponentes extends Component {
              dataOrdenada:listadoOrdenado
           });*/
         }
-        const url= 'https://api-modulocontrol.herokuapp.com/ubicaciones';
+        //const url= 'https://api-modulocontrol.herokuapp.com/ubicaciones';
+        const url = URL.url.concat('ubicaciones');
         fetch(url,{
             method: 'GET',
             headers: {
@@ -141,6 +143,7 @@ class ListarComponentes extends Component {
     }
     //recibe las ubicaciones de los archivos
     handleChangeUbic(ubic,id_rec){
+        console.log(ubic);
         this.state.data.map(items=>{
             if(items.id_rec===id_rec){
                 items.ubic=ubic;
@@ -186,16 +189,19 @@ class ListarComponentes extends Component {
     openModal(e){
         //https://github.com/xue2han/react-dynamic-modal
          let text=e.target.id;
+        // console.log(text);
          let id_re=e.target.name;
-        ModalManager.open(<MyModal text={text} id_rec={id_re} change={this.handleChangeObs}/>);
-
+        let component = <MyModal text={text} id_rec={id_re} change={this.handleChangeObs} estado={true}/>;
+        let  node = document.createElement('div');
+        ReactDOM.render(component,node);
     }
     // envia un JSON al server
     handleEnviarData() {
         //console.log(this.state.JSON);
         const arreglo=this.verificar();
        // console.log(JSON.stringify(arreglo));
-        const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/id';
+       // const url= 'https://api-modulocontrol.herokuapp.com/recaudaciones/id';
+        const url = URL.url.concat('recaudaciones/id');
         this.setState({
            isLoading:true
         });
@@ -217,7 +223,7 @@ class ListarComponentes extends Component {
                     alert('Datos cargados exitosamente');
                 }
             })
-            console.log(JSON.stringify(arreglo));
+           // console.log(JSON.stringify(arreglo));
         //https://github.com/calambrenet/react-table/blob/master/src/react-table.jsx
     }
     eventoNombre(e)
@@ -255,12 +261,14 @@ class ListarComponentes extends Component {
           //  console.log(listadoOrdenado);
             groupList = this.groupBy(listadoOrdenado,"codigo");
         }
-       // console.log(groupList);
-      ModalManager.open(<Modal2 text={groupList} nombre={nom} codigo={id}/>);
+        let component = <Modal2 text={groupList} nombre={nom} codigo={id} estado={true}/>;
+        let  node = document.createElement('div');
+        ReactDOM.render(component,node);
     }
     render() {
+
         const listado = this.state.data;
-        //console.log("render=>"+listado);
+       // console.log(listado);
 
             return (
                 <div className="table-scroll">
