@@ -10,7 +10,7 @@ class Check extends Component{
       //  console.log(this.props.disabled);
         return (
             (validado) ? (<input id={id} type="checkbox" className="DatosCSS-input-checkbox"  defaultChecked disabled={validado} onClick={(e)=>{this.props.change(e,id)}}/>)
-                       : ( <input id={id} type="checkbox" className="DatosCSS-input-checkbox"  disabled={validado} onClick={(e)=>{this.props.change(e,id)}}/> )
+                      : ( <input id={id} type="checkbox" className="DatosCSS-input-checkbox"  disabled={validado} onClick={(e)=>{this.props.change(e,id)}}/> )
         );
 }
 
