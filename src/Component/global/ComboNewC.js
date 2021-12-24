@@ -23,6 +23,7 @@ class Combo extends Component{
         //         break;
         //     default:
         //         num = "";
+        // }
         this.props.val(e.target.value,this.props.id_rec);
     }
 
