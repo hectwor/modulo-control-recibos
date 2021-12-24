@@ -22,7 +22,6 @@ class Combo extends Component{
         //     case "Seleccione ubicación":num="";
         //         break;
         //     default:
-        //         num = "";
         this.props.val(e.target.value,this.props.id_rec);
     }
 
