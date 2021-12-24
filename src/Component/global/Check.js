@@ -3,8 +3,6 @@ import React,{Component} from 'react';
 
 class Check extends Component{
 
-
-
     render(){
         const {validado,id}=this.props;
       //  console.log(this.props.disabled);
